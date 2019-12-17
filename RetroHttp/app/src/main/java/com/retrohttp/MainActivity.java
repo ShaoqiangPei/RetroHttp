@@ -3,8 +3,6 @@ package com.retrohttp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.httplibrary.util.LogUtil;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -12,8 +10,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LogUtil.setDebug(true);
-        LogUtil.i("=======我是通讯log=========");
+
     }
 
 }

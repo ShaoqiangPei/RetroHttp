@@ -1,16 +1,16 @@
 package com.httplibrary.util;
 
 /**
- * Title:log打印自定义类
+ * Title:为RetroHttp打印自定义类
  *
  * Description:
  *   默认自定义打印是关闭状态，
- *   若要打印，需要提前设置开启打印功能：LogUtil.setDebug(true);
+ *   若要打印，需要提前设置开启打印功能：RetroLog.setDebug(true);
  *
  * Created by pei
  * Date: 2019/1/12
  */
-public class LogUtil {
+public class RetroLog {
 
     private static final String TAG = "http";
     private static final String LEVEL_I = "i";
@@ -21,7 +21,7 @@ public class LogUtil {
 
     public static boolean LOG = false;//默认关闭自定义打印
 
-    private LogUtil() {
+    private RetroLog() {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
@@ -32,62 +32,62 @@ public class LogUtil {
 
     public static void i(String tag, String msg) {
         if (LOG) {
-            printLog(formatLog(tag), msg, LogUtil.LEVEL_I);
+            printLog(formatLog(tag), msg, RetroLog.LEVEL_I);
         }
     }
 
     public static void i(String msg) {
         if (LOG) {
-            printLog(formatLog(TAG), msg, LogUtil.LEVEL_I);
+            printLog(formatLog(TAG), msg, RetroLog.LEVEL_I);
         }
     }
 
     public static void d(String tag, String msg) {
         if (LOG) {
-            printLog(formatLog(tag), msg, LogUtil.LEVEL_D);
+            printLog(formatLog(tag), msg, RetroLog.LEVEL_D);
         }
     }
 
     public static void d(String msg){
         if (LOG) {
-            printLog(formatLog(TAG), msg, LogUtil.LEVEL_D);
+            printLog(formatLog(TAG), msg, RetroLog.LEVEL_D);
         }
     }
 
     public static void w(String tag, String msg) {
         if (LOG) {
-            printLog(formatLog(tag), msg, LogUtil.LEVEL_W);
+            printLog(formatLog(tag), msg, RetroLog.LEVEL_W);
         }
     }
 
     public static void w(String msg){
         if (LOG) {
-            printLog(formatLog(TAG), msg, LogUtil.LEVEL_W);
+            printLog(formatLog(TAG), msg, RetroLog.LEVEL_W);
         }
     }
 
 
     public static void v(String tag, String msg) {
         if (LOG) {
-            printLog(formatLog(tag), msg, LogUtil.LEVEL_V);
+            printLog(formatLog(tag), msg, RetroLog.LEVEL_V);
         }
     }
 
     public static void v(String msg) {
         if (LOG) {
-            printLog(formatLog(TAG), msg, LogUtil.LEVEL_V);
+            printLog(formatLog(TAG), msg, RetroLog.LEVEL_V);
         }
     }
 
     public static void e(String tag, String msg) {
         if (LOG) {
-            printLog(formatLog(tag), msg, LogUtil.LEVEL_E);
+            printLog(formatLog(tag), msg, RetroLog.LEVEL_E);
         }
     }
 
     public static void e(String msg) {
         if (LOG) {
-            printLog(formatLog(TAG), msg, LogUtil.LEVEL_E);
+            printLog(formatLog(TAG), msg, RetroLog.LEVEL_E);
         }
     }
 
@@ -129,19 +129,19 @@ public class LogUtil {
 
     private static void printByLogType(String tag, String msg, String type) {
         switch (type) {
-            case LogUtil.LEVEL_I:
+            case RetroLog.LEVEL_I:
                 android.util.Log.i(tag, msg);
                 break;
-            case LogUtil.LEVEL_D:
+            case RetroLog.LEVEL_D:
                 android.util.Log.d(tag, msg);
                 break;
-            case LogUtil.LEVEL_W:
+            case RetroLog.LEVEL_W:
                 android.util.Log.w(tag, msg);
                 break;
-            case LogUtil.LEVEL_V:
+            case RetroLog.LEVEL_V:
                 android.util.Log.v(tag, msg);
                 break;
-            case LogUtil.LEVEL_E:
+            case RetroLog.LEVEL_E:
                 android.util.Log.e(tag, msg);
                 break;
             default:

@@ -78,4 +78,14 @@ dependencies {
     testImplementation librarys.testImplementation_test_junit
     androidTestImplementation librarys.androidTestImplementation_ext_junit
     androidTestImplementation librarys.androidTestImplementation_espresso
+
+    //网络请求
+    implementation librarys.implementation_retrofit2
+    implementation librarys.implementation_retrofit2_converter_gson
+    implementation librarys.implementation_okhttp3
+    implementation librarys.implementation_logging_interceptor
+    implementation librarys.implementation_retrofit2_adapter_rxjava2
+    implementation librarys.implementation_rx_android2
+    implementation librarys.implementation_rx_java2
+    
 }
