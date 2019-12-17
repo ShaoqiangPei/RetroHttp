@@ -1,6 +1,8 @@
 
 
-# RetroHttp简介
+# RetroHttp简介  
+
+[![](https://jitpack.io/v/ShaoqiangPei/RetroHttp.svg)](https://jitpack.io/#ShaoqiangPei/RetroHttp)
 
 
 ## 概述
