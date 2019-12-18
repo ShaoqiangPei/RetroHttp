@@ -62,7 +62,7 @@
 //        //是否打印httpLog
 //        boolean isPrintHttpLog=AppConfig.getInstance().isHttpLog();
 //        //设置RetroHttp打印工具类
-//        RetroLog.setDebug(isPrintHttpLog);
+//        printHttpLog(isPrintHttpLog);
 //
 //        return (T) BaseRetrofitor.this
 //                .setCustomerLog(isPrintHttpLog);//设置是否关闭自定义log拦截器
