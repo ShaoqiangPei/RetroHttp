@@ -46,16 +46,16 @@ http通讯核心包，其包结构如下：
 - intercepter(通讯拦截器包)  
 主要处理通讯中关于拦截器的内容，包括设置header，缓存，打印通讯log等。包结构如下：  
    ------- intercepter  
-       ------ CacherInterceptor : 缓存拦截器  
-       ------ HeaderInterceptor : header拦截器(对Header统一处理)  
-       ------ LoggingInterceptor : 自定义log打印拦截器   
-       ------ SystemLogger : 调用系统log拦截器   
-       ------ UnexpectedInterceptor : 用于解决文件下载出现的Stream相关错误     
+   &emsp;&emsp;------ CacherInterceptor : 缓存拦截器  
+   &emsp;&emsp;------ HeaderInterceptor : header拦截器(对Header统一处理)  
+   &emsp;&emsp;------ LoggingInterceptor : 自定义log打印拦截器   
+   &emsp;&emsp;------ SystemLogger : 调用系统log拦截器   
+   &emsp;&emsp;------ UnexpectedInterceptor : 用于解决文件下载出现的Stream相关错误     
 - retrofit(通讯核心包)    
 主要用于处理http通讯，其包结构如下：   
    ------- retrofit   
-       ------ SuperRetrofitor : 网络通讯超类   
-       ------ HttpConfig : 网络通讯相关配置     
+   &emsp;&emsp;------ SuperRetrofitor : 网络通讯超类   
+   &emsp;&emsp;------ HttpConfig : 网络通讯相关配置     
 
 
 
