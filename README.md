@@ -24,6 +24,6 @@ RetroHttp 是一个基于 RetrofitHttp 进行封装使用的http库，目的是�
 ```
 ## 使用说明
 ### 一. RetroHttp架构说明
-RetroHttp架构说明请参考 [RetroHttp架构说明](https://github.com/ShaoqiangPei/RetroHttp/blob/master/design/RetroHttp%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E.md)  
+RetroHttp架构说明请参考 [RetroHttp架构说明](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/RetroHttp%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E.md)  
 ### 二. RetroHttp使用  
 
