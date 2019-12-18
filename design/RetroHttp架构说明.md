@@ -46,16 +46,16 @@ http通讯核心包，其包结构如下：
 - intercepter(通讯拦截器包)  
 主要处理通讯中关于拦截器的内容，包括设置header，缓存，打印通讯log等。包结构如下：  
    ------- intercepter  
-   &emsp;&emsp;------ CacherInterceptor : 缓存拦截器  
-   &emsp;&emsp;------ HeaderInterceptor : header拦截器(对Header统一处理)  
-   &emsp;&emsp;------ LoggingInterceptor : 自定义log打印拦截器   
-   &emsp;&emsp;------ SystemLogger : 调用系统log拦截器   
-   &emsp;&emsp;------ UnexpectedInterceptor : 用于解决文件下载出现的Stream相关错误     
+   &emsp;&emsp;------ [CacherInterceptor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/interceptor/CacherInterceptor.java) : 缓存拦截器  
+   &emsp;&emsp;------ [HeaderInterceptor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/interceptor/HeaderInterceptor.java) : header拦截器(对Header统一处理)  
+   &emsp;&emsp;------ [LoggingInterceptor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/interceptor/LoggingInterceptor.java) : 自定义log打印拦截器   
+   &emsp;&emsp;------ [SystemLogger](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/interceptor/SystemLogger.java) : 调用系统log拦截器   
+   &emsp;&emsp;------ [UnexpectedInterceptor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/interceptor/UnexpectedInterceptor.java) : 用于解决文件下载出现的Stream相关错误     
 - retrofit(通讯核心包)    
 主要用于处理http通讯，其包结构如下：   
    ------- retrofit   
-   &emsp;&emsp;------ SuperRetrofitor : 网络通讯超类   
-   &emsp;&emsp;------ HttpConfig : 网络通讯相关配置     
+   &emsp;&emsp;------ [SuperRetrofitor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/retrofit/SuperRetrofitor.java) : 网络通讯超类   
+   &emsp;&emsp;------ [HttpConfig](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/retrofit/HttpConfig.java) : 网络通讯相关配置     
 
 
 
