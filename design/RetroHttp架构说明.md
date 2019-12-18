@@ -61,8 +61,8 @@ http通讯核心包，其包结构如下：
 你需要将 httpApp包(整个包，包括里面的所有类) 拷贝到自己的项目中，然后根据实际情况将每个类做修改，以符合使用(库中httpApp包下所有类已被注释，仅作模板参考)**  
 
 httpApp包为项目对接包，需要开发者将此包及包中所有类均拷贝到自己的项目中，然后根据模板作对应修改，以满足实际开发需求。  
-httpApp包结构如下:  
-   ------- httpApp 
+httpApp包结构如下(直接点击类名，可查看使用说明):  
+   ------- httpApp  
    &emsp;&emsp;------ [ApiService]():通讯接口   
    &emsp;&emsp;------ [BaseRetrofitor]():网络通讯基类  
    &emsp;&emsp;------ [ApiRetrofitor]():具体的某个通讯使用的Retrofitor   
