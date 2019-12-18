@@ -2,13 +2,14 @@
 
 ### 概述
 ApiService是RetroHttp库 网络通讯的接口类，要进行网络通讯的api接口，均在此类中定义。  
-点击此处，可查看ApiService模板代码
+点击此处，可查看[ApiService模板代码](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/httpApp/ApiService.java)
 
 ### 使用说明
 #### 一.使用
-将ApiService模板代码复制到自己项目中，然后按需修改 api 接口定义，以助实现网络通讯。
+将ApiService模板代码复制到自己项目中，然后按需修改 api 接口定义，以助实现网络通讯。  
+关于ApiService模板代码的注解问题，可以看接下来第二条：Retrofit接口注解
 
-#### 二.ApiService接口注解解释
+#### 二.Retrofit接口注解
 一般我们的 “请求参数注解” 都是在自建的 java 接口内进行，类似如下:
 ```
 public interface GitHubService {
