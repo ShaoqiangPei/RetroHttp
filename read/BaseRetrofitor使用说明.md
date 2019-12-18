@@ -66,9 +66,9 @@ BaseRetrofitor有一个设置通讯基本参数及设置log打印的方法：
     /**设置网络连接配置**/
     public <T extends BaseRetrofitor> T getBaseRetrofitor() {
         //是否打印httpLog
-        boolean isPrintHttpLog = AppConfig.getInstance().isHttpLog();
+        boolean isPrintHttpLog=AppConfig.getInstance().isHttpLog();
         //设置RetroHttp打印工具类
-        RetroLog.setDebug(isPrintHttpLog);
+        printHttpLog(isPrintHttpLog);
 
         return (T) BaseRetrofitor.this
                 .setCustomerLog(isPrintHttpLog);//设置是否关闭自定义log拦截器
