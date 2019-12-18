@@ -22,7 +22,7 @@ public class RetroConfig {
         return Holder.instance;
     }
 
-    /**初始化赋值**/
+    /**初始化赋值(在项目的自定义Application中初始化)**/
     public void init(Application application){
         this.mApplication=application;
     }

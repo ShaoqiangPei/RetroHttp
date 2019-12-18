@@ -8,11 +8,13 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-
 /**
- * Created by Admin on 2017/5/19.
+ * Title:发起网络通讯及返回结果处理类
+ * Description:
+ *
+ * Created by pei
+ * Date: 2017/10/31
  */
-
 public class RxManager {
 
     public static void connect(Observable observable, RxObserver rxObserver){

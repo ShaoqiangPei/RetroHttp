@@ -15,6 +15,8 @@
 // */
 //public abstract class ApiObserver<T> extends RxObserver<T> {
 //
+//    /***注：以下code及提示语定义仅作范例参考,实际定义以你项目通讯需求为准***/
+//
 //    //自定义统一code处理及提示语
 //    public static final int CONNECT_TIME_OUT_CODE=-4; //服务器连接超时
 //
@@ -23,7 +25,7 @@
 //    private Map<Integer, String> getResultMap(){
 //        Map<Integer, String>map=new HashMap<>();
 //
-//        //自定义异常code及提示语
+//        //自定义异常code及提示语的统一处理
 //        map.put(ApiObserver.CONNECT_TIME_OUT_CODE,"服务器连接超时");
 //
 //        return map;

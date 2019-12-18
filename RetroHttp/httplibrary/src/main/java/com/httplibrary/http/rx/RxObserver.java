@@ -3,15 +3,16 @@ package com.httplibrary.http.rx;
 import com.httplibrary.http.error.ErrorCode;
 import com.httplibrary.http.error.HttpRepose;
 import com.httplibrary.http.error.ServerException;
-
-import java.util.Map;
-
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by Admin on 2017/5/19.
+ * Title:返回结果处理类
+ * Description:
+ *
+ * Created by pei
+ * Date: 2017/10/31
  */
 public abstract class RxObserver<T> implements Observer {
 
