@@ -86,6 +86,6 @@ dependencies {
     implementation librarys.implementation_logging_interceptor
     implementation librarys.implementation_retrofit2_adapter_rxjava2
     implementation librarys.implementation_rx_android2
-    implementation librarys.implementation_rx_java2
+    api librarys.implementation_rx_java2
     
 }
