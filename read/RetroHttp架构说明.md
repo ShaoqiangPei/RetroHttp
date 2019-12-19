@@ -27,7 +27,23 @@ app 包 主要用来给 RetroHttp的使用做全局初始化，其包结构如�
     RetroConfig.getInstance().init(Application application);
 ```
 ##### 2.2 util 包
-主要用于库内部使用的一些工具类及打印网络通讯log的工具类
+主要用于库内部使用的一些工具类及打印网络通讯log的工具类  
+这里主要讲下util包下的log打印类RetroLog。
+**RetroLog打印类主要为RetroHttp库的log调试服务，不建议外部库引用并使用**
+- 设置开启RetroLog的log打印功能： 
+```
+RetroLog.setDebug(true);
+```
+设置关闭RetroLog的log打印功能：
+```
+RetroLog.setDebug(false);
+```
+- RetroLog 打印log等级  
+RetroLog具备不同的log打印等级：v、d、i、w、e,在RetroHttp库中主要使用 w 等级的log
+- 关于调试  
+在你项目中，若要调试打印通讯log,你可以在你自己的项目中全局配置文件AppConfig内设置isHttpLog=true，  
+然后在BaseRetrofitor的getBaseRetrofitor()方法中做相应设置。
+AppConfig类模板及getBaseRetrofitor()方法请参考[BaseRetrofitor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/BaseRetrofitor%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)的使用
 
 ##### 2.3 interfacer 包
 此包下存放 http 通讯总接口
