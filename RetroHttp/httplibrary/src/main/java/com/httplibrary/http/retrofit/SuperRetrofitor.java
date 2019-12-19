@@ -36,7 +36,6 @@ public abstract class SuperRetrofitor implements IRetrofitor {
     private boolean mCustomerLog=HttpConfig.DEFAULT_CUSTOMER_LOG;//默认不使用使用自定义log拦截器
     private boolean mDefaultSSL=HttpConfig.DEFAULT_SSL;//默认进行ssl加密
 
-
     @Override
     public Retrofit getRetrofit() {
         return getBuilder(getUrl()).build();

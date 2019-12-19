@@ -3,6 +3,8 @@ package com.httplibrary.http.rx;
 import com.httplibrary.http.error.ErrorCode;
 import com.httplibrary.http.error.HttpRepose;
 import com.httplibrary.http.error.ServerException;
+import com.httplibrary.util.HttpTimeFlag;
+
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -16,6 +18,7 @@ import io.reactivex.disposables.Disposable;
  */
 public abstract class RxObserver<T> implements Observer {
 
+    private String mTimeTag;//通讯时间戳tag
     private Disposable mDisposable;
 
     @Override
@@ -43,6 +46,9 @@ public abstract class RxObserver<T> implements Observer {
             //设置错误及提示语
             setExceptionInfo(null,ErrorCode.NETWORK_EXCEPTION_CODE);
         }else{
+            //通讯用时打印
+            HttpTimeFlag.getInstance().stopFlagByString(getTimeTag());
+            //通讯成功的处理
             unifiedSuccess(obj);
             doNext((T) obj);
         }
@@ -56,19 +62,33 @@ public abstract class RxObserver<T> implements Observer {
 
     /**设置错误及提示语**/
     public void setExceptionInfo(Throwable e, int errorCode){
+        //通讯用时打印
+        HttpTimeFlag.getInstance().stopFlagByString(getTimeTag());
+        //错误处理
         ServerException serverException=new ServerException();
         serverException.setCode(errorCode);
         if(e!=null){
             serverException.setMessage(e.getMessage());
         }
         //设置code,设置固定提示语
-        ServerException exception= HttpRepose.handle(serverException,this);
+        ServerException exception= HttpRepose.handle(serverException);
+        unifiedError(exception);
         doError(exception);
     }
 
-    /**发生错误时的统一处理**/
+    /**获取时间戳Tag**/
+    private String getTimeTag() {
+        return mTimeTag;
+    }
+
+    /**设置时间戳Tag**/
+    public void setTimeTag(String timeTag) {
+        this.mTimeTag = timeTag;
+    }
+
+    /**发生错误时的统一处理(接收返回结果)**/
     public abstract void unifiedError(ServerException serverException);
-    /**通讯成功的统一处理**/
+    /**通讯成功的统一处理(接收返回结果)**/
     public abstract void unifiedSuccess(Object obj);
 
     //单个通讯的处理

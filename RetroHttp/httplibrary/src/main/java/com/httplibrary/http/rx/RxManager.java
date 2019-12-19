@@ -1,6 +1,7 @@
 package com.httplibrary.http.rx;
 
 import com.httplibrary.http.error.ErrorCode;
+import com.httplibrary.util.HttpTimeFlag;
 import com.httplibrary.util.NetUtil;
 import com.httplibrary.util.RetroLog;
 
@@ -30,5 +31,8 @@ public class RxManager {
             //设置错误及提示语
             rxObserver.setExceptionInfo(null, ErrorCode.NO_NET_WORK);
         }
+        //设置通讯发起时时间戳
+        String timeTag=HttpTimeFlag.getInstance().startFlag();
+        rxObserver.setTimeTag(timeTag);
     }
 }
