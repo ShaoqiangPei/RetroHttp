@@ -28,8 +28,10 @@ app 包 主要用来给 RetroHttp的使用做全局初始化，其包结构如�
 ```
 ##### 2.2 util 包
 主要用于库内部使用的一些工具类及打印网络通讯log的工具类  
-这里主要讲下util包下的log打印类RetroLog。
+这里主要讲下util包下的log打印类RetroLog。  
 **RetroLog打印类主要为RetroHttp库的log调试服务，不建议外部库引用并使用**
+- RetroLog源码
+点击这里，查看[RetroLog源码](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/util/RetroLog.java)
 - 设置开启RetroLog的log打印功能： 
 ```
 RetroLog.setDebug(true);
