@@ -80,7 +80,7 @@ dependencies {
     androidTestImplementation librarys.androidTestImplementation_espresso
 
     //网络请求
-    implementation librarys.implementation_retrofit2
+    api librarys.implementation_retrofit2
     implementation librarys.implementation_retrofit2_converter_gson
     implementation librarys.implementation_okhttp3
     implementation librarys.implementation_logging_interceptor
