@@ -10,9 +10,12 @@ import com.httplibrary.interfacer.IRetrofitor;
 import com.httplibrary.util.RetroLog;
 import com.httplibrary.util.StringUtil;
 import java.io.File;
+import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -174,9 +177,43 @@ public abstract class SuperRetrofitor implements IRetrofitor {
         return this;
     }
 
+    /**设置header**/
+    private HeaderInterceptor.HeaderInterceptorListener getHeaderInterceptorListener(){
+        return new HeaderInterceptor.HeaderInterceptorListener() {
+            @Override
+            public Request diposeRequest(Request request) {
+                Request.Builder builder = request.newBuilder();
+
+                Map<String,String>map=getHeaderMap();
+                if(map!=null&& !map.isEmpty()){
+                    //遍历map
+                    for (Map.Entry<String, String> entry : map.entrySet()) {
+                        //获取map的key
+                        String key = null;
+                        Object objKey = entry.getKey();
+                        if (objKey != null) {
+                            key = objKey.toString();
+                        }
+                        //获取map中key对应的value
+                        String value = null;
+                        Object objValue = entry.getValue();
+                        if (objValue != null) {
+                            key = objValue.toString();
+                        }
+                        if (StringUtil.isNotEmpty(key)) {
+                            builder.addHeader(key, value);
+                        }
+                    }
+                }
+                request = builder.build();
+                return request;
+            }
+        };
+    }
+
     public abstract Class<?> getApiServiceClass();//获取ApiService类
 
-    public abstract HeaderInterceptor.HeaderInterceptorListener getHeaderInterceptorListener();//设置header
+    public abstract Map<String,String> getHeaderMap();//设置header的map
 
     public abstract String getBaseReleaseUrl();//基准正式版url
     public abstract String getBaseTestUrl();//基准测试版url

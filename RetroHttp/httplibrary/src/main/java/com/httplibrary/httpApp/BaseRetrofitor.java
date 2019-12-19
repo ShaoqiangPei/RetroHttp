@@ -3,6 +3,10 @@
 //import com.httplibrary.http.interceptor.HeaderInterceptor;
 //import com.httplibrary.http.retrofit.SuperRetrofitor;
 //import com.httplibrary.util.RetroLog;
+//
+//import java.util.HashMap;
+//import java.util.Map;
+//
 //import okhttp3.Request;
 //
 ///**
@@ -37,19 +41,13 @@
 //
 //    /**设置统一的Header**/
 //    @Override
-//    public HeaderInterceptor.HeaderInterceptorListener getHeaderInterceptorListener() {
-//        return new HeaderInterceptor.HeaderInterceptorListener() {
-//            @Override
-//            public Request diposeRequest(Request request) {
-//                Request.Builder builder = request.newBuilder();
+//    public Map<String, String> getHeaderMap() {
+//        Map<String, String> map = new HashMap<>();
 //
-////                //所有通讯增加自定义请求头,格式类似：
-////                builder.addHeader(key, value);
+////        //所有通讯增加自定义请求头,格式类似：
+////        map.put(key, value);
 //
-//                request = builder.build();
-//                return request;
-//            }
-//        };
+//        return map;
 //    }
 //
 //    @Override
