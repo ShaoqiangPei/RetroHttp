@@ -86,7 +86,11 @@ httpApp包结构如下(直接点击类名，可查看使用说明):
    &emsp;&emsp;------ [ApiRetrofitor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/ApiRetrofitor%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md):具体的某个通讯使用的Retrofitor   
    &emsp;&emsp;------ [ApiObserver](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/ApiObserver%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md):通讯返回结果集的统一处理(继承自RxObserver)    
    &emsp;&emsp;------ [ResponseCode](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/ResponseCode%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md):返回结果code定义(此类用于定义具体通讯返回的code的定义)   
-   &emsp;&emsp;------ [AppConfig](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/httpApp/AppConfig.java):整个app配置文件类(一般放在你项目包结构的的最外层)
+   &emsp;&emsp;------ [AppConfig](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/httpApp/AppConfig.java):整个app配置文件类(一般放在你项目包结构的的最外层)   
+   
+**注：将httpApp拷贝到你项目之后，你需要将AppConfig移到你项目结构的最外层作为整个app的配置管理类。**
+
+
 
 
 
