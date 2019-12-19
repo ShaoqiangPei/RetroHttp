@@ -48,10 +48,10 @@ public class HttpTimeFlag {
         long tempTime=stopFlag(flag);
         String tempStr = "-1";
         if (tempTime == -1) {
-            RetroLog.w( "===== RetroHttp通讯TimeFlag=" + flag + "  用时: -1(未设置开始时间戳或时间戳tag生成失败)");
+            RetroLog.w( "===== RetroHttp通讯TimeFlag=" + flag + " 返回数据用时: -1(未设置开始时间戳或时间戳tag生成失败)");
         } else {
             tempStr = formatTime(tempTime);
-            RetroLog.w( "====== RetroHttp通讯TimeFlag=" + flag + "  用时: " + tempStr + " ======");
+            RetroLog.w( "====== RetroHttp通讯TimeFlag=" + flag + " 返回数据用时: " + tempStr + " ======");
         }
         return tempStr;
     }

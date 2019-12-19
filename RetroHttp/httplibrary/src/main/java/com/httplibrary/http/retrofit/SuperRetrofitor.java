@@ -1,6 +1,8 @@
 package com.httplibrary.http.retrofit;
 
 
+import android.util.Log;
+
 import com.httplibrary.http.interceptor.CacherInterceptor;
 import com.httplibrary.http.interceptor.HeaderInterceptor;
 import com.httplibrary.http.interceptor.LoggingInterceptor;
@@ -197,7 +199,7 @@ public abstract class SuperRetrofitor implements IRetrofitor {
                         String value = null;
                         Object objValue = entry.getValue();
                         if (objValue != null) {
-                            key = objValue.toString();
+                            value = objValue.toString();
                         }
                         if (StringUtil.isNotEmpty(key)) {
                             builder.addHeader(key, value);

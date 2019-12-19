@@ -23,13 +23,10 @@ import okio.Buffer;
 
 public class LoggingInterceptor implements Interceptor{
 
-    private long mRequestTime;//请求发起的时间
-    private long mResponseTime;//收到响应的时间
-
     @Override
     public Response intercept(Chain chain) throws IOException {
         //发送请求参数
-        mRequestTime=requestParams(chain);
+        requestParams(chain);
         //接收返回结果
         Response response=getResponseParams(chain);
 
@@ -70,14 +67,10 @@ public class LoggingInterceptor implements Interceptor{
 
     /**接收返回结果**/
     private Response getResponseParams(Chain chain) throws IOException {
-        mResponseTime = System.currentTimeMillis();//收到响应的时间
         Response response = chain.proceed(chain.request());
         MediaType mediaType = response.body().contentType();
         String content = response.body().string();
-        long delayTime=mResponseTime-mRequestTime;//单位毫秒
-        double delaySecondTime=((double)delayTime)/1000;//单位秒
 
-        RetroLog.w("=====通讯返回数据====delayTime==="+delayTime+"("+delaySecondTime+"秒)");
         RetroLog.w("=====通讯返回数据====content==="+content);
 
         if (response.body() != null) {
