@@ -1,8 +1,5 @@
 package com.httplibrary.http.retrofit;
 
-
-import android.util.Log;
-
 import com.httplibrary.http.interceptor.CacherInterceptor;
 import com.httplibrary.http.interceptor.HeaderInterceptor;
 import com.httplibrary.http.interceptor.LoggingInterceptor;
@@ -12,7 +9,6 @@ import com.httplibrary.interfacer.IRetrofitor;
 import com.httplibrary.util.RetroLog;
 import com.httplibrary.util.StringUtil;
 import java.io.File;
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
