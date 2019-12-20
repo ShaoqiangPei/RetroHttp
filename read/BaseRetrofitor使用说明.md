@@ -30,25 +30,19 @@ BaseRetrofitor中，你需要定义整个app的baseurl，包括测试版和正�
 ```
     /**设置统一的Header**/
     @Override
-    public HeaderInterceptor.HeaderInterceptorListener getHeaderInterceptorListener() {
-        return new HeaderInterceptor.HeaderInterceptorListener() {
-            @Override
-            public Request diposeRequest(Request request) {
-                Request.Builder builder = request.newBuilder();
+    public Map<String, String> getHeaderMap() {
+        Map<String, String> map = new HashMap<>();
 
-//                //所有通讯增加自定义请求头,格式类似：
-//                builder.addHeader(key, value);
+//        //所有通讯增加自定义请求头,格式类似：
+//        map.put("key", "value");
 
-                request = builder.build();
-                return request;
-            }
-        };
+        return map;
     }
 ```
 若你有统一设置通讯header的需求，则可以在上述diposeRequest(Request request)方法中以
 ```
-                //所有通讯增加自定义请求头,格式类似：
-                builder.addHeader(key, value);
+        //所有通讯增加自定义请求头,格式类似：
+        map.put("key", "value");
 ```
 格式给所以通讯定义统一请求Header。
 #### 五.正式，测试系统切换
@@ -89,48 +83,5 @@ BaseRetrofitor有一个设置通讯基本参数及设置log打印的方法：
 涉及到一个类 AppConfig，与第五点一样，主要是涉及到整个app的配置类AppConfig，下面就来讲讲AppConfig
 #### 七.整个app的配置类 —— AppConfig
 作为一个项目，你需要在自己新建的项目最外层设置一个配置类AppConfig，作为对整个app的配置参数统一管理。  
-下面贴出 AppConfig 类模板代码：
-```
-/**
- * Description: app版本切换及Log调试参数控制类
- *
- * Author:pei
- * Date: 2019/3/21
- */
-public class AppConfig {
-
-    /**是否为测试版本**/
-    private boolean isTest=true;
-
-    /**是否打开调试模式(整个app非通讯模块Log)**/
-    private boolean isDebug=true;
-
-    /**是否开启通讯模块Log打印(调试时方便查看通讯传参和返回结果)**/
-    private boolean isHttpLog=true;
-
-
-    private AppConfig(){}
-
-    private static class Holder {
-        private static AppConfig instance = new AppConfig();
-    }
-
-    public static AppConfig getInstance(){
-        return Holder.instance;
-    }
-
-    public boolean isTest(){
-        return isTest;
-    }
-
-    public boolean isDebug(){
-        return isDebug;
-    }
-
-    public boolean isHttpLog() {
-        return isHttpLog;
-    }
-
-}
-```
+点击这里，可查看[AppConfig类模板代码](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/httpApp/AppConfig.java)
 
