@@ -32,8 +32,8 @@ ApiObserver 继承自RxObserver，主要用于 通讯返回结果集的统一处
 #### 四. 更改 "无网络" 和 “通讯onNext(Object obj)返回数据为空” 的提示语
  ApiObserver 继承自 RxObserver，追溯 RxObserver代码，我们会发现在RxObserver中已经使用了两个既定常量的处理：
  ```
- ErrorCode.NO_NET_WORK=-1  无网络，提示语为：网络未连接,请开启网络后使用!
- ErrorCode.NETWORK_EXCEPTION_CODE=-2  通讯onNext(Object obj)返回数据为空,提示语为：通讯数据解析异常
+ ErrorCode.NO_NET_WORK=-2  无网络，提示语为：网络未连接,请开启网络后使用!
+ ErrorCode.NETWORK_EXCEPTION_CODE=-3  通讯onNext(Object obj)返回数据为空,提示语为：通讯数据解析异常
  ```
  若我们想更改这两种情况的提示语，那么我们可以在 ApiObserver 的  getResultMap方法中作如下处理：
  ```
