@@ -13,6 +13,8 @@ import com.httplibrary.util.StringUtil;
  */
 public class HttpRepose {
 
+    public static String APPEND_MESSAGE="(原错误为:%s)";
+
     //当前通讯为http请求头不兼容,请更换为https请求头[对应自定义code=ErrorCode.HTTP_HPPS_CODE]
     private static final String HTTP_HPPS_MESSAGE="CLEARTEXT communication to appxd.inm.cn not permitted by network security policy";
     //通讯连接超时[对应自定义code=ErrorCode.CONNECT_TIME_OUT_CODE]
@@ -46,7 +48,7 @@ public class HttpRepose {
 
     /**针对ErrorCode.SERVER_FAILED_CODE这类错误中的一些特殊错误的处理**/
     private static ServerException getSpecialException(int code, String message) {
-        String lastMessage = "(原错误为:" + message + ")";
+        String lastMessage = String.format(HttpRepose.APPEND_MESSAGE,message);
         if (StringUtil.isNotEmpty(message)) {
             switch (message) {
                 case HTTP_HPPS_MESSAGE://当前通讯为http请求头不兼容,请更换为https请求头

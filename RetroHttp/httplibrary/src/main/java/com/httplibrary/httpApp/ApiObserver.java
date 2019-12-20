@@ -17,43 +17,54 @@
 //
 //    /***注：以下code及提示语定义仅作范例参考,实际定义以你项目通讯需求为准***/
 //
-//    //自定义统一code处理及提示语
-//    public static final int CONNECT_TIME_OUT_CODE=-4; //服务器连接超时
-//
+//    //自定义统一code处理及提示语[自定义code不要和ErrorCode类中的重复]
+//    public static final int XXXX_EXCEPTION_CODE=-101; //服务器xxx错误
 //
 //    /**自定义统一code处理及提示语**/
-//    private Map<Integer, String> getResultMap(){
-//        Map<Integer, String>map=new HashMap<>();
+//    @Override
+//    public Map<Integer, String> getResultMap() {
+//        Map<Integer, String> map = new HashMap<>();
 //
 //        //自定义异常code及提示语的统一处理
-//        map.put(ApiObserver.CONNECT_TIME_OUT_CODE,"服务器连接超时");
+//        map.put(ApiObserver.XXXX_EXCEPTION_CODE, "服务器xxx错误");
+//
 //
 //        return map;
 //    }
 //
-//
 //    /**返回失败的统一处理**/
 //    @Override
-//    public void unifiedError(ServerException serverException) {
-////        LogUtil.i("=======ApiObserver返回错误统一处理========");
-////        LogUtil.i("=======原始返回数据错误===errorCode="+serverException.getCode()+",   errorMessage="+serverException.getMessage());
-////
-////        //处理"connect timed out"提示语
-////        if("connect timed out".equals(serverException.getMessage())){
-////            serverException.setCode(ApiObserver.CONNECT_TIME_OUT_CODE);
-////            serverException.setMessage(ApiObserver.CONNECT_TIME_OUT_MESSAGE);
-////            doError(serverException);
+//    public ServerException unifiedError(ServerException serverException) {
+//        LogUtil.i("=====ApiObserver返回失败统一处理===原错误code="+serverException.getCode());
+//
+//        //对返回错误做统一处理的逻辑,如:
+////        //处理"xxxxxxxxxx"提示语
+////        if ("xxxxxxxxxx".equals(serverException.getMessage())) {
+////            serverException.setCode(ApiObserver.XXXX_EXCEPTION_CODE);
+////            String errorMsg=getResultMap().get(ApiObserver.XXXX_EXCEPTION_CODE);
+////            serverException.setMessage(String.format(HttpRepose.APPEND_MESSAGE,errorMsg));
 ////        }
-////        LogUtil.i("=======返回数据错误===errorCode="+serverException.getCode()+",   errorMessage="+serverException.getMessage());
+//
+//
+//
+//        LogUtil.e("=====返回数据错误(统一处理后):errorCode="+serverException.getCode()+", errorMessage="+serverException.getMessage());
+//        return serverException;
 //    }
 //
 //    /**返回成功的统一处理**/
 //    @Override
-//    public void unifiedSuccess(Object obj) {
-////        LogUtil.i("=======ApiObserver返回成功统一处理========");
+//    public Object unifiedSuccess(Object obj) {
+//        String successResult=obj==null?"null":obj.toString();
+//        LogUtil.i("=====ApiObserver返回成功统一处理===原数据obj="+successResult);
 //
+//
+//        //对返回成功结果做统一处理的逻辑
+//        //......
+//
+//
+//
+//        LogUtil.i("=====返回数据成功(统一处理后):obj="+obj);
+//        return obj;
 //    }
-//
-//
 //
 //}

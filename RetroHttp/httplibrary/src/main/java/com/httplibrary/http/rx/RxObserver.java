@@ -5,6 +5,8 @@ import com.httplibrary.http.error.HttpRepose;
 import com.httplibrary.http.error.ServerException;
 import com.httplibrary.util.HttpTimeFlag;
 
+import java.util.Map;
+
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -48,9 +50,8 @@ public abstract class RxObserver<T> implements Observer {
         }else{
             //通讯用时打印
             HttpTimeFlag.getInstance().stopFlagByString(getTimeTag());
-            //通讯成功的处理
-            unifiedSuccess(obj);
-            doNext((T) obj);
+            //通讯成功先经过unifiedSuccess统一处理，然后下发给doNext方法
+            doNext((T) unifiedSuccess(obj));
         }
     }
 
@@ -72,8 +73,8 @@ public abstract class RxObserver<T> implements Observer {
         }
         //设置code,设置固定提示语
         ServerException exception= HttpRepose.handle(serverException);
-        unifiedError(exception);
-        doError(exception);
+        //发生错误时统一处理,然后下发到doError方法
+        doError(unifiedError(exception));
     }
 
     /**获取时间戳Tag**/
@@ -86,10 +87,12 @@ public abstract class RxObserver<T> implements Observer {
         this.mTimeTag = timeTag;
     }
 
+    /**App中自定义统一code处理及提示语**/
+    public abstract Map<Integer, String> getResultMap();
     /**发生错误时的统一处理(接收返回结果)**/
-    public abstract void unifiedError(ServerException serverException);
+    public abstract ServerException unifiedError(ServerException serverException);
     /**通讯成功的统一处理(接收返回结果)**/
-    public abstract void unifiedSuccess(Object obj);
+    public abstract Object unifiedSuccess(Object obj);
 
     //单个通讯的处理
     public abstract void doNext(T t);
