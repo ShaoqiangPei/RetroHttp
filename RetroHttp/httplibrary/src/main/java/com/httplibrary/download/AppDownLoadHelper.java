@@ -40,8 +40,6 @@ public class AppDownLoadHelper {
 
     public AppProgressListener mListener;
 
-    private String mUrl;
-
     private String mPath;
 
     private int mConnectionTimeout;
