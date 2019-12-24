@@ -9,6 +9,7 @@
 RetroHttp 包含以下几个package：
 ```
    ------- app
+   ------- download
    ------- util
    ------- interfacer
    ------- http
@@ -26,7 +27,10 @@ app 包 主要用来给 RetroHttp的使用做全局初始化，其包结构如�
     //在你项目的 Application 中调用 
     RetroConfig.getInstance().init(Application application);
 ```
-##### 2.2 util 包
+##### 2.2 download 包
+主要用于apk文件的下载和安装，外部使用的话指挥涉及到一个 DownLoadHelper 类。
+具体 apk文件下载安装方法的使用可参考[Apk文件下载与安装](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/Apk%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85.md)  
+##### 2.3 util 包
 主要用于库内部使用的一些工具类及打印网络通讯log的工具类  
 这里主要讲下util包下的log打印类RetroLog。  
 **RetroLog打印类主要为RetroHttp库的log调试服务，不建议外部库引用并使用**
@@ -47,10 +51,10 @@ RetroLog具备不同的log打印等级：v、d、i、w、e,在RetroHttp库中主
 然后在BaseRetrofitor的getBaseRetrofitor()方法中做相应设置。
 AppConfig类模板及getBaseRetrofitor()方法请参考[BaseRetrofitor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/BaseRetrofitor%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)的使用
 
-##### 2.3 interfacer 包
+##### 2.4 interfacer 包
 此包下存放 http 通讯总接口
 
-##### 2.4 http 包
+##### 2.5 http 包
 http通讯核心包，其包结构如下：
 ```
    ------- http
@@ -74,7 +78,7 @@ http通讯核心包，其包结构如下：
    ------- retrofit   
    &emsp;&emsp;------ [SuperRetrofitor](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/retrofit/SuperRetrofitor.java) : 网络通讯超类   
    &emsp;&emsp;------ [HttpConfig](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/http/retrofit/HttpConfig.java) : 网络通讯相关配置     
-##### 2.5 httpApp 包
+##### 2.6 httpApp 包
 **注意：RetroHttp库中 app包，util包,interfacer包和http包皆为不可更改包，即你只需要引用就行。但是 httpApp包 不同，
 你需要将 httpApp包(整个包，包括里面的所有类) 拷贝到自己的项目中，然后根据实际情况将每个类做修改，以符合使用(库中httpApp包下所有类已被注释，仅作模板参考)**  
 
