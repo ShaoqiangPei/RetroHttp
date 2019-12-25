@@ -1,5 +1,7 @@
 package com.httplibrary.download;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,11 +11,8 @@ import android.os.Build;
 import android.os.Environment;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.FileProvider;
-import com.httplibrary.R;
-import com.httplibrary.app.RetroConfig;
 import com.httplibrary.util.RetroLog;
 import com.httplibrary.util.StringUtil;
-
 import java.io.File;
 
 /**
@@ -41,7 +40,7 @@ public class DownLoadHelper {
 
     private int NOTIFY_ID = 1000;
     private NotificationCompat.Builder mBuilder;
-    private NotificationManager notificationManager;
+    private NotificationManager mNotificationManager;
     private Context mContext;
 
     private DownLoadHelper() {}
@@ -172,8 +171,6 @@ public class DownLoadHelper {
         return progressDialog;
     }
 
-
-
     /**
      * 初始化Notification通知
      *
@@ -183,10 +180,9 @@ public class DownLoadHelper {
         mBuilder=new NotificationCompat.Builder(mContext, "default");
         mBuilder.setSmallIcon(drawableId)// 设置通知的图标
                 .setContentText("0%")// 进度Text
-                .setContentTitle("inm盘代码更新")// 标题
+                .setContentTitle("app更新")// 标题
                 .setProgress(100, 0, false);// 设置进度条
-        notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);// 获取系统通知管理器
-        notificationManager.notify(NOTIFY_ID, mBuilder.build());// 发送通知
+        sendNotification();
     }
 
     /**
@@ -195,16 +191,30 @@ public class DownLoadHelper {
     public void updateNotification(int currProgress) {
         mBuilder.setContentText(currProgress + "%");
         mBuilder.setProgress(100, currProgress, false);
-        notificationManager.notify(NOTIFY_ID, mBuilder.build());
+        sendNotification();
+    }
 
+    private void sendNotification(){
+        mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);// 获取系统通知管理器
+        //高版本需要渠道
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//android8.0
+            //只在Android O之上需要渠道
+            String channelId = "default";
+            String channelName = "默认通知";
+            NotificationChannel notificationChannel=new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+            //如果这里用IMPORTANCE_NOENE就需要在系统的设置里面开启渠道，通知才能正常弹出
+            mNotificationManager.createNotificationChannel(notificationChannel);
+        }
+        //发送通知
+        mNotificationManager.notify(NOTIFY_ID, mBuilder.build());
     }
 
     /**
      * 取消通知
      */
     public void cancelNotification() {
-        if (notificationManager != null) {
-            notificationManager.cancel(NOTIFY_ID);
+        if (mNotificationManager != null) {
+            mNotificationManager.cancel(NOTIFY_ID);
         }
     }
 
