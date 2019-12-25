@@ -54,7 +54,28 @@ public class AppContext extends Application {
 **这里需要注意的是：将httpApp拷贝到你项目之后，你需要将AppConfig移到你项目结构的最外层作为整个app的配置管理类。**
 ### 三. 通讯接入流程 
 具体参考[通讯接入流程说明](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/%E9%80%9A%E8%AE%AF%E6%8E%A5%E5%85%A5%E6%B5%81%E7%A8%8B%E8%AF%B4%E6%98%8E.md)
-### 四. 查看通讯log
+### 四. Apk下载与安装(更新应用)  
+apk的下载与更新，主要涉及到 download文件夹，外部调用的话，只涉及到其中的 DownLoadHelper 类。  
+下载更新apk的方法，可参考[Apk文件下载与安装](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/Apk%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85.md)  
+### 五. Http/Htps 通讯的兼容
+Android9.0以后通讯不支持 http 方式，建议使用 https 方式通讯。RetroHttp支持 http通讯兼容，如果你项目中要使用http通讯的话，
+你可以在你项目的清单文件 manifast.xml中添加 retrohttp_config.xml文件的声明(注：retrohttp_config.xml文件包含在retrohttp库中)  
+在你 manifast.xml 的 application 标签下，添加如下声明：
+```
+<application
+        //其他代码省略
+	//......
+        android:networkSecurityConfig="@xml/retrohttp_config"
+        
+	>
+	
+	//其他代码省略
+	//......
+
+</application>
+	
+```
+### 六. 查看通讯log
 在BaseRetrofitor类中通过配置类 AppConfig 中的变量：
 ```
         //是否打印httpLog
