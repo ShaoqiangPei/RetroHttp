@@ -1,6 +1,5 @@
 package com.httplibrary.download;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -11,6 +10,8 @@ import android.os.Build;
 import android.os.Environment;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.FileProvider;
+
+import com.httplibrary.util.NetUtil;
 import com.httplibrary.util.RetroLog;
 import com.httplibrary.util.StringUtil;
 import java.io.File;
@@ -91,6 +92,11 @@ public class DownLoadHelper {
      * @param downloadListener 监听接口
      */
     public void downLoadFile(String url,Context context, final DownloadListener downloadListener){
+        //检测网络
+        if(!NetUtil.isNetworkConnected()){
+            downloadListener.onError("当前无网络,请检测网络链接!");
+            return;
+        }
         //设置通知icon
         if(mAppIconId==0){
             throw new SecurityException("===请设置下载通知的图标icon资源id(一般设置app的icon)===");
@@ -103,7 +109,6 @@ public class DownLoadHelper {
         if(StringUtil.isEmpty(mAuthorityTag)){
             throw new NullPointerException("===请设置清单文件的 provider 中配置的authorities值===");
         }
-        RetroLog.i("=======下载url====="+url);
         this.mContext=context;
         //初始化通知
         initNotification(mAppIconId);
@@ -122,14 +127,14 @@ public class DownLoadHelper {
                 .setDownLoadListener(new AppProgressListener() {
                     @Override
                     public void onStart() {
-                        RetroLog.e("========开始下载=====");
+                        RetroLog.w("========开始下载=====");
                         downloadListener.onStart();
                     }
 
                     @Override
                     public void update(long bytesRead, long contentLength, boolean done) {
                         int read = (int) (bytesRead * 100f / contentLength);
-                        RetroLog.i("=======下载文件总:"+contentLength+"    当前size:"+bytesRead);
+                        RetroLog.w("=======下载文件总:"+contentLength+"    当前size:"+bytesRead);
                         //更新进度条
                         downloadListener.update(read,done);
                         //更新通知
@@ -138,21 +143,21 @@ public class DownLoadHelper {
 
                     @Override
                     public void onCompleted() {
-                        RetroLog.i("========下载完成=====");
+                        RetroLog.w("========下载完成=====");
 
                         File file= new File(filePath);
                         // 安装软件
                         downloadListener.onCompleted();
                         cancelNotification();
-                        installApk(file);
 
+                        installApk(file);
                     }
 
                     @Override
                     public void onError(String err) {
                         downloadListener.onError(err);
                         cancelNotification();
-                        RetroLog.e("========下载失败===" + err);
+                        RetroLog.e("=========下载失败:" + err);
                     }
                 })
                 .create()

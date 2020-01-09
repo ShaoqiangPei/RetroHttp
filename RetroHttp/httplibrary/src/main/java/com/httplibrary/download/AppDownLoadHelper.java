@@ -206,7 +206,7 @@ public class AppDownLoadHelper {
                     @Override
                     public void accept(ResponseBody responseBody) throws Exception {
 
-                        RetroLog.i( "========next" + responseBody.contentLength());
+                        RetroLog.w( "========next" + responseBody.contentLength());
 
                         OutputStream output = null;
                         InputStream input = null;
@@ -240,7 +240,7 @@ public class AppDownLoadHelper {
                         }
 
                         long endTime = System.currentTimeMillis();
-                        RetroLog.i( "========time" + (endTime - startTime));
+                        RetroLog.w( "========time" + (endTime - startTime));
 
                     }
                 }, new Consumer<Throwable>() {

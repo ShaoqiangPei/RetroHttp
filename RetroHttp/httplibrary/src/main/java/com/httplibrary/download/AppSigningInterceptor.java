@@ -1,7 +1,6 @@
 package com.httplibrary.download;
 
 import java.io.IOException;
-
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
