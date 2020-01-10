@@ -118,14 +118,14 @@ public abstract class SuperRetrofitor implements IRetrofitor {
         return mCustomerLog;
     }
 
-    /**
-     * 是否打开自定义Log调试(仅供SuperRetrofitor子类使用)
-     *
-     * @param print true:打开调试log,  false:关闭调试log
-     */
-    protected void printHttpLog(boolean print){
-        RetroLog.setDebug(print);
-    }
+//    /**
+//     * 是否打开自定义Log调试(仅供SuperRetrofitor子类使用)
+//     *
+//     * @param print true:打开调试log,  false:关闭调试log
+//     */
+//    protected void printHttpLog(boolean print){
+//        RetroLog.setDebug(print);
+//    }
 
     /**获取通讯是否使用默认ssl加密的标志**/
     private boolean isDefaultSSL() {

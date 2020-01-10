@@ -32,8 +32,8 @@ public class DownLoadHelper {
     public static final String DEST_FILE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File
             .separator + "appFile";
 
-    //目标文件存储的文件名,如:"check.apk"
-    private String mApkName;
+    //目标文件存储的文件名,如:"check.apk,delta.patch"
+    private String mFileName;
     //AUTHORITY_TAG 即是在清单文件中配置的authorities
     private String mAuthorityTag;
     //appIcon,即app图标id，如：R.mipmap.ic_launcher
@@ -66,11 +66,11 @@ public class DownLoadHelper {
 
     /**
      * 设置通知icon id，如：R.mipmap.ic_launcher
-     * @param apkName:apk文件名，如：check.apk
+     * @param filName:apk文件名或增量文件名，如：check.apk,delta.patch
      * @return
      */
-    public DownLoadHelper setFileName(String apkName){
-        this.mApkName=apkName;
+    public DownLoadHelper setFileName(String filName){
+        this.mFileName=filName;
         return DownLoadHelper.this;
     }
 
@@ -102,8 +102,8 @@ public class DownLoadHelper {
             throw new SecurityException("===请设置下载通知的图标icon资源id(一般设置app的icon)===");
         }
         //设置文件名
-        if(StringUtil.isEmpty(mApkName)){
-            throw new NullPointerException("===请设置下载的文件名,如:jianshu.apk===");
+        if(StringUtil.isEmpty(mFileName)){
+            throw new NullPointerException("===请设置下载的文件名,如:jianshu.apk,delta.patch===");
         }
         //设置清单文件的 provider 中配置的authorities
         if(StringUtil.isEmpty(mAuthorityTag)){
@@ -118,7 +118,7 @@ public class DownLoadHelper {
             AppDownLoadManager.getInstance().cancelHelperByTag("xx");
         }
 
-        final String filePath=DEST_FILE_DIR+mApkName;
+        final String filePath=DEST_FILE_DIR+mFileName;
 
         new AppDownLoadHelper.Builder()
                 .setPath(filePath)

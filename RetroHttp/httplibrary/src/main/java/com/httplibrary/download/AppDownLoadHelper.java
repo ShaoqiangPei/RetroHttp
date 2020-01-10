@@ -23,7 +23,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
-
 public class AppDownLoadHelper {
 
     public static final int CONNECTION_TIMEOUT = 10;
@@ -260,7 +259,6 @@ public class AppDownLoadHelper {
                         } else if (mListener != null) {
                             mListener.onCompleted();
                         }
-
                     }
                 });
         if (mListener != null) {
