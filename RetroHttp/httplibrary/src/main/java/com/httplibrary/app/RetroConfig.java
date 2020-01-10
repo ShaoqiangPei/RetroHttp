@@ -13,7 +13,7 @@ import com.httplibrary.util.RetroLog;
 public class RetroConfig {
 
     private Application mApplication;
-    private boolean mHttpLog;//是否开启网络打印
+    private boolean mHttpLog=false;//是否开启网络打印(默认不开启)
 
     private RetroConfig(){}
 
@@ -40,7 +40,7 @@ public class RetroConfig {
     public void setHttpLog(boolean print){
         this.mHttpLog=print;
         //设置自定义网络打印开关
-        RetroLog.setDebug(print);
+        RetroLog.setDebug(mHttpLog);
     }
 
     /**获取项目上下文**/
