@@ -33,6 +33,7 @@ public class RetroConfig {
 
     /**
      * 是否打开网络库Log打印
+     * 网络库Log打印,tag="http",log等级为 w 和 e
      *
      * @param print true:打开调试log,  false:关闭调试log
      * @return

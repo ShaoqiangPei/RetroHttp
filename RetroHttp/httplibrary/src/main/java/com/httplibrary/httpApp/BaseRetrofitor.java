@@ -57,13 +57,9 @@
 //
 //    /**设置网络连接配置**/
 //    public <T extends BaseRetrofitor>T getBaseRetrofitor(){
-//        //是否打印httpLog
-//        boolean isPrintHttpLog=AppConfig.getInstance().isHttpLog();
-//        //设置RetroHttp打印工具类
-//        printHttpLog(isPrintHttpLog);
-//
 //        return (T) BaseRetrofitor.this
-//                .setCustomerLog(isPrintHttpLog);//设置是否关闭自定义log拦截器
+//                //设置是否关闭自定义log拦截器,一般与网络log打印控制一致(默认为false,即关闭log打印和拦截器)
+//                .setCustomerLog(RetroConfig.getInstance().isHttpLog());
 ////                .setSystemLog(false)//设置是否使用系统拦截器打印log,默认false,不使用
 ////                .setDefaultSSL(true)//设置通讯是否使用SSL加密,默认true,使用
 ////                .setConnectTimeOut(30) //设置网络连接超时，默认30秒

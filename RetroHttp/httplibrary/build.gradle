@@ -73,12 +73,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation librarys.implementation_support_appcompat
     testImplementation librarys.testImplementation_test_junit
     androidTestImplementation librarys.androidTestImplementation_ext_junit
     androidTestImplementation librarys.androidTestImplementation_espresso
-
     //网络请求
     api librarys.implementation_retrofit2
     implementation librarys.implementation_retrofit2_converter_gson
@@ -87,5 +86,5 @@ dependencies {
     implementation librarys.implementation_retrofit2_adapter_rxjava2
     implementation librarys.implementation_rx_android2
     api librarys.implementation_rx_java2
-    
+    implementation files('src/main/jniLibs/bspatch-1.0.0_202001061346.jar')
 }
