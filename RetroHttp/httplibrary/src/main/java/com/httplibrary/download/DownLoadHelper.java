@@ -124,6 +124,10 @@ public class DownLoadHelper {
         if(StringUtil.isEmpty(mFileName)){
             throw new NullPointerException("===请设置下载的文件名,如:jianshu.apk,delta.patch===");
         }
+        //当为增量更新时,mFileName中需要以“.patch”结尾
+        if(mIncrementUpdate&&!mFileName.contains(".patch")){
+            throw new SecurityException("===为增量更新,setFileName(String filName)中的filName需要以.patch尾缀结尾===");
+        }
         //设置清单文件的 provider 中配置的authorities
         if(StringUtil.isEmpty(mAuthorityTag)){
             throw new NullPointerException("===请设置清单文件的 provider 中配置的authorities值===");
@@ -255,7 +259,7 @@ public class DownLoadHelper {
                     return null;
                 }
                 //合成的新的apk保存路径
-                String outputPath = createNewApk().getAbsolutePath();
+                String outputPath = createNewDownLoadFile().getAbsolutePath();
                 //开始合成，是一个耗时任务
                 BsPatcher.bsPatch(oldPath, patchPath, outputPath);
                 //合成成功，重新安装apk
@@ -292,25 +296,18 @@ public class DownLoadHelper {
      *
      * @return
      */
-    private File createNewApk() {
-        String newFileName=null;
-        if(StringUtil.isNotEmpty(mFileName)&&mFileName.contains(".")){
-            newFileName=mFileName.substring(0,mFileName.indexOf(".")+1)+"apk";
-            RetroLog.w("======下载 newFileName==="+newFileName);
-        }else{
-            newFileName="delta_pei.apk";
-        }
-        String path=DEST_FILE_DIR+newFileName;
-        File newApk = new File(path);
-        if(newApk.exists()){
-            newApk.delete();
+    private File createNewDownLoadFile() {
+        String path=DEST_FILE_DIR+mFileName;
+        File newFile = new File(path);
+        if(newFile.exists()){
+            newFile.delete();
         }
         try {
-            newApk.createNewFile();
+            newFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return newApk;
+        return newFile;
     }
 
     /**dialog进度条**/
