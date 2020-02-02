@@ -234,36 +234,50 @@ public class DownLoadHelper {
         new AsyncTask<Void, Void, File>() {
             @Override
             protected File doInBackground(Void... voids) {
-                // 获取旧版本路径（正在运行的apk路径）
-                String oldPath =context.getApplicationInfo().sourceDir;
-                RetroLog.w("====旧版本apk文件路径==oldPath="+oldPath);
-                //差分包路径，服务器下载到本地路径
-                //  /data/data/com.testq/old-to-new.patch
-                File patchFile=new File(patchPath);
-                RetroLog.w("=====patchFile======"+patchFile.exists());
-
-                //合成的新的apk保存路径
-                String outputPath = createNewApk().getAbsolutePath();
-                if (!patchFile.exists()) {
-                    RetroLog.w("=====合成文件不存在=====outputPath="+outputPath);
+                if(StringUtil.isEmpty(patchPath)){
+                    RetroLog.w("=====增量文件路径为空=====patchPath="+patchPath);
                     return null;
                 }
+                //获取旧版本路径（正在运行的apk路径）
+                // 示例：/data/app/com.testq-FiRlNIBqo9oKf4dXh6ChSQ==/base.apk
+                String oldPath=context.getApplicationInfo().sourceDir;
+                File oldFile=new File(oldPath);
+                if(!oldFile.exists()){
+                    RetroLog.w("=====旧版本安装文件(正在运行的apk文件)不存在======");
+                    return null;
+                }
+                RetroLog.w("====旧版本apk文件路径==oldPath="+oldPath);
+                //差分包路径，服务器下载到本地路径
+                //  示例：/data/data/com.testq/old-to-new.patch
+                File patchFile=new File(patchPath);
+                if(!patchFile.exists()){
+                    RetroLog.w("=====差分文件patchFile不存在===========");
+                    return null;
+                }
+                //合成的新的apk保存路径
+                String outputPath = createNewApk().getAbsolutePath();
                 //开始合成，是一个耗时任务
                 BsPatcher.bsPatch(oldPath, patchPath, outputPath);
                 //合成成功，重新安装apk
-                return new File(outputPath);
+                File outputFile=new File(outputPath);
+                if(!outputFile.exists()){
+                    RetroLog.w("=====合成文件不存在======");
+                    return null;
+                }
+                RetroLog.w("=====合成文件路径=====outputPath="+outputPath);
+                return outputFile;
             }
 
             @Override
             protected void onPostExecute(File file) {
                 super.onPostExecute(file);
-                // 已经合成了，调用该方法，安装新版本apk
                 if (file != null&&file.exists()) {
+                    //合成文件成功,安装新版本apk
                     if(listener!=null){
                         listener.deltaFileSuccess(file);
                     }
                 }else{
-                    RetroLog.w("========差分包不存在===========");
+                    //合成文件失败
                     if(listener!=null){
                         listener.deltaFileFailed();
                     }
