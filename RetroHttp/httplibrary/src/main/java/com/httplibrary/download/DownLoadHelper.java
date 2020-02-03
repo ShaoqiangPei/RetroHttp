@@ -32,7 +32,7 @@ public class DownLoadHelper {
      */
     //DEST_FILE_DIR===/storage/emulated/0/check_app
     private static final String DEST_FILE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File
-            .separator + "appFile"+File.separator;
+            .separator + "appFile";
 
     private static final String DELTA_FAILED_MESSAGE="增量更新失败";
 
@@ -142,13 +142,6 @@ public class DownLoadHelper {
         if (helper != null) {
             AppDownLoadManager.getInstance().cancelHelperByTag("xx");
         }
-        //创建存储文件夹
-        File folderFile=new File(DEST_FILE_DIR);
-        if(!folderFile.exists()){
-            RetroLog.w("=======存储文件夹不存在,开始创建=======");
-            folderFile.mkdir();
-        }
-        RetroLog.w("=======下载后存储文件夹路径为=====DEST_FILE_DIR=="+DEST_FILE_DIR);
         String filePath=DEST_FILE_DIR+mFileName;
         RetroLog.w("=======文件下载存储路径=====filePath=="+filePath);
         new AppDownLoadHelper.Builder()
