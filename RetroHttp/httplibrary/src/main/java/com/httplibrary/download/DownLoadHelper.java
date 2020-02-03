@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.webkit.DownloadListener;
-
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.FileProvider;
 import com.httplibrary.util.NetUtil;
@@ -144,9 +142,15 @@ public class DownLoadHelper {
         if (helper != null) {
             AppDownLoadManager.getInstance().cancelHelperByTag("xx");
         }
-
-        final String filePath=DEST_FILE_DIR+mFileName;
-
+        //创建存储文件夹
+        File folderFile=new File(DEST_FILE_DIR);
+        if(!folderFile.exists()){
+            RetroLog.w("=======存储文件夹不存在,开始创建=======");
+            folderFile.mkdir();
+        }
+        RetroLog.w("=======下载后存储文件夹路径为=====DEST_FILE_DIR=="+DEST_FILE_DIR);
+        String filePath=DEST_FILE_DIR+mFileName;
+        RetroLog.w("=======文件下载存储路径=====filePath=="+filePath);
         new AppDownLoadHelper.Builder()
                 .setPath(filePath)
                 .setTag("xx")
@@ -217,8 +221,6 @@ public class DownLoadHelper {
                                     cancelNotification();
                                 }
                             });
-
-
                         }else{
                             RetroLog.w("========全量更新下载完成==============");
                             downloadListener.onCompleted();
@@ -376,7 +378,7 @@ public class DownLoadHelper {
         }else{
             newFileName="delta_pei.apk";
         }
-        String path=DEST_FILE_DIR+mFileName;
+        String path=DEST_FILE_DIR+newFileName;
         File newFile = new File(path);
         if(newFile.exists()){
             newFile.delete();
