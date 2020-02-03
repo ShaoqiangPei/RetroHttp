@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.webkit.DownloadListener;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.FileProvider;
 import com.httplibrary.util.NetUtil;
@@ -172,8 +174,30 @@ public class DownLoadHelper {
 
                         if(mIncrementUpdate){
                             RetroLog.w("========增量更新下载完成==============");
+//                            //".patch"文件和本地".apk"文件合成新apk文件的方法
+//                            bsPatchFile(context, filePath, new OnDeltaFileListener() {
+//                                @Override
+//                                public void deltaFileSuccess(File file) {
+//
+//                                    downloadListener.onCompleted();
+//                                    cancelNotification();
+//                                    //文件合成成功后安装软件
+//                                    installApk(file);
+//                                }
+//
+//                                @Override
+//                                public void deltaFileFailed(String errorMessage) {
+//                                    //文件合成失败,设置增量更新标志 mIncrementUpdate=false,开始执行全量更新
+//                                    mIncrementUpdate=false;
+//                                    //增量更新运行失败
+//                                    downloadListener.onError(DELTA_FAILED_MESSAGE);
+//                                    cancelNotification();
+//                                }
+//                            });
+
+
                             //".patch"文件和本地".apk"文件合成新apk文件的方法
-                            bsPatchFile(context, filePath, new OnDeltaFileListener() {
+                            bsPatchFile2(context, filePath, new OnDeltaFileListener() {
                                 @Override
                                 public void deltaFileSuccess(File file) {
 
@@ -184,14 +208,17 @@ public class DownLoadHelper {
                                 }
 
                                 @Override
-                                public void deltaFileFailed() {
+                                public void deltaFileFailed(String errorMessage) {
                                     //文件合成失败,设置增量更新标志 mIncrementUpdate=false,开始执行全量更新
                                     mIncrementUpdate=false;
                                     //增量更新运行失败
+                                    RetroLog.w("增量更新失败:"+errorMessage);
                                     downloadListener.onError(DELTA_FAILED_MESSAGE);
                                     cancelNotification();
                                 }
                             });
+
+
                         }else{
                             RetroLog.w("========全量更新下载完成==============");
                             downloadListener.onCompleted();
@@ -283,11 +310,55 @@ public class DownLoadHelper {
                 }else{
                     //合成文件失败
                     if(listener!=null){
-                        listener.deltaFileFailed();
+                        listener.deltaFileFailed(null);
                     }
                 }
             }
         }.execute();
+    }
+
+    private void bsPatchFile2(Context context,String patchPath,OnDeltaFileListener listener){
+        if(StringUtil.isEmpty(patchPath)){
+            RetroLog.w("=====增量文件路径为空=====patchPath="+patchPath);
+            listener.deltaFileFailed("增量文件路径为空");
+            return;
+        }
+        //获取旧版本路径（正在运行的apk路径）
+        // 示例：/data/app/com.testq-FiRlNIBqo9oKf4dXh6ChSQ==/base.apk
+        String oldPath=context.getApplicationInfo().sourceDir;
+        File oldFile=new File(oldPath);
+        if(!oldFile.exists()){
+            RetroLog.w("=====旧版本安装文件(正在运行的apk文件)不存在======");
+            listener.deltaFileFailed("旧版本安装文件(正在运行的apk文件)不存在");
+            return;
+        }
+        RetroLog.w("====旧版本apk文件路径==oldPath="+oldPath);
+        //差分包路径，服务器下载到本地路径
+        //  示例：/data/data/com.testq/old-to-new.patch
+        File patchFile=new File(patchPath);
+        if(!patchFile.exists()){
+            RetroLog.w("=====差分文件patchFile不存在===========");
+            listener.deltaFileFailed("差分文件patchFile不存在");
+            return;
+        }
+        //合成的新的apk保存路径
+        String outputPath = createNewDownLoadFile().getAbsolutePath();
+        //开始合成，是一个耗时任务
+        boolean makeSuccess=BigNews.make(oldPath, outputPath,patchPath);
+        //合成成功，重新安装apk
+        if(makeSuccess){
+            File outputFile=new File(outputPath);
+            if(!outputFile.exists()){
+                RetroLog.w("=====合成文件不存在======");
+                listener.deltaFileFailed("合成文件不存在");
+            }else {
+                RetroLog.w("=====合成文件路径=====outputPath=" + outputPath);
+                listener.deltaFileSuccess(outputFile);
+            }
+        }else{
+            RetroLog.w("=====增量更新合成文件失败======");
+            listener.deltaFileFailed("增量更新合成文件失败");
+        }
     }
 
     /**
@@ -402,7 +473,7 @@ public class DownLoadHelper {
 
     public interface OnDeltaFileListener{
         void deltaFileSuccess(File file);
-        void deltaFileFailed();
+        void deltaFileFailed(String errorMessage);
     }
 
 }
