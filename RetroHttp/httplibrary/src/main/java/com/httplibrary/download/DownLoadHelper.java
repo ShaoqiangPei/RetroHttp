@@ -297,7 +297,7 @@ public class DownLoadHelper {
      * @return
      */
     private File createNewDownLoadFile() {
-        String path=DEST_FILE_DIR+mFileName;
+        String path=DEST_FILE_DIR+File.separator+mFileName;
         File newFile = new File(path);
         if(newFile.exists()){
             newFile.delete();
