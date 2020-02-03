@@ -261,7 +261,7 @@ public class DownLoadHelper {
                 //合成的新的apk保存路径
                 String outputPath = createNewDownLoadFile().getAbsolutePath();
                 //开始合成，是一个耗时任务
-                BigNews.make(oldPath, patchPath, outputPath);
+                BigNews.make(oldPath, outputPath,patchPath);
                 //合成成功，重新安装apk
                 File outputFile=new File(outputPath);
                 if(!outputFile.exists()){
