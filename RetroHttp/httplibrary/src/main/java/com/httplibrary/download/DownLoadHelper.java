@@ -34,7 +34,7 @@ public class DownLoadHelper {
      */
     //DEST_FILE_DIR===/storage/emulated/0/check_app
     private static final String DEST_FILE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File
-            .separator + "appFile";
+            .separator + "appFile"+File.separator;
 
     private static final String DELTA_FAILED_MESSAGE="增量更新失败";
 
@@ -286,7 +286,7 @@ public class DownLoadHelper {
                     return null;
                 }
                 //合成的新的apk保存路径
-                String outputPath = createNewDownLoadFile().getAbsolutePath();
+                String outputPath = createNewApkFile().getAbsolutePath();
                 //开始合成，是一个耗时任务
                 BigNews.make(oldPath, outputPath,patchPath);
                 //合成成功，重新安装apk
@@ -341,8 +341,10 @@ public class DownLoadHelper {
             listener.deltaFileFailed("差分文件patchFile不存在");
             return;
         }
+        RetroLog.w("====差分文件patchFile路径==patchPath="+patchPath);
         //合成的新的apk保存路径
-        String outputPath = createNewDownLoadFile().getAbsolutePath();
+        String outputPath = createNewApkFile().getAbsolutePath();
+        RetroLog.w("====合成的新的apk保存路径==outputPath="+outputPath);
         //开始合成，是一个耗时任务
         boolean makeSuccess=BigNews.make(oldPath, outputPath,patchPath);
         //合成成功，重新安装apk
@@ -367,8 +369,14 @@ public class DownLoadHelper {
      *
      * @return
      */
-    private File createNewDownLoadFile() {
-        String path=DEST_FILE_DIR+File.separator+mFileName;
+    private File createNewApkFile() {
+        String newFileName=null;
+        if(StringUtil.isNotEmpty(mFileName)&&mFileName.contains(".")){
+            newFileName=mFileName.substring(0,mFileName.indexOf(".")+1)+"apk";
+        }else{
+            newFileName="delta_pei.apk";
+        }
+        String path=DEST_FILE_DIR+mFileName;
         File newFile = new File(path);
         if(newFile.exists()){
             newFile.delete();
