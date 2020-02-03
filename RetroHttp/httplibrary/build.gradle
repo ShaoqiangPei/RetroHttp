@@ -22,9 +22,6 @@ android {
         testInstrumentationRunner config.testInstrumentationRunner
         consumerProguardFiles config.consumerProguardFiles
 
-        ndk {
-            abiFilters 'armeabi-v7a'
-        }
     }
 
     buildTypes {
@@ -90,5 +87,6 @@ dependencies {
     implementation librarys.implementation_retrofit2_adapter_rxjava2
     implementation librarys.implementation_rx_android2
     api librarys.implementation_rx_java2
-    implementation files('src/main/jniLibs/bspatch-1.0.0_202001061346.jar')
+    //增量更新
+    implementation librarys.implementation_increment_update
 }

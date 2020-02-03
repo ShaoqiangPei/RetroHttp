@@ -14,9 +14,9 @@ import androidx.core.content.FileProvider;
 import com.httplibrary.util.NetUtil;
 import com.httplibrary.util.RetroLog;
 import com.httplibrary.util.StringUtil;
-import com.myjni.BsPatcher;
 import java.io.File;
 import java.io.IOException;
+import ha.excited.BigNews;
 
 /**
  * Title:下载apk文件帮转类，供外部使用
@@ -261,7 +261,7 @@ public class DownLoadHelper {
                 //合成的新的apk保存路径
                 String outputPath = createNewDownLoadFile().getAbsolutePath();
                 //开始合成，是一个耗时任务
-                BsPatcher.bsPatch(oldPath, patchPath, outputPath);
+                BigNews.make(oldPath, patchPath, outputPath);
                 //合成成功，重新安装apk
                 File outputFile=new File(outputPath);
                 if(!outputFile.exists()){
