@@ -121,3 +121,39 @@ authorities="${applicationId}"值为你项目的applicationId，一般在app—�
     }
 ```
 这样，就可以下载新的apk文件进行安装了。不过在调用这个下载方法前，我们最好先判断下手机内存是否足够。
+#### 四. 关于增量更新
+##### 4.1 生成差分文件和合成新文件的工具
+本库`increment_update`文件夹下是增量更新相关工具文件，包括以下几个文件夹
+```
+bsdiff-4.3  差分工具
+bzip2-1.0.6  差分工具依赖库
+bspatch(so+jar)  实现增量更新的so+jar包
+bsdiff-win-master  windows版差量工具
+```
+这里前三个文件夹供大家学习之用，了解就好。主要看`bsdiff-win-master`文件夹
+`bsdiff-win-master`文件夹下主要看`bsdiff-v4.3-win-x64.zip`压缩包
+将`bsdiff-v4.3-win-x64.zip`解压出来，里面有两个exe可执行文件，可在windows 64位系统上运行：
+```
+bsdiff.exe  生成差分文件的工具
+bspatch.exe  合成新文件的工具
+```
+以下贴出利用`bsdiff.exe`和`bspatch.exe`工具，结合cmd命令生成差分文件的命令：
+```
+//生成增量文件
+bsdiff app_1.0.apk app_2.0.apk old-to-new.patch
+
+//合成新文件
+bspatch app_1.0.apk new2.apk old-to-new.patch
+
+//校验app_2.0.apk与新合成的new2.apk的md5是否一致(一致则说明合成apk正确)
+Linux环境下md5校验命令
+md5 old.apk       //old为要校验的apk文件名
+
+windows环境下md5校验命令
+certutil -hashfile old.apk MD5      //old为要校验的apk文件名  
+```
+##### 4.2 生成差分文件和合成新文件的依赖库
+除了可以用本库的差分工具生成差分文件和合成新文件，你也可以用增量更新库实现文件的差分和合成。
+具体可参考
+
+
