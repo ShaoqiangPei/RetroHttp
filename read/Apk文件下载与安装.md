@@ -60,12 +60,33 @@ authorities="${applicationId}"值为你项目的applicationId，一般在app—�
 #### 三. 下载安装方法的使用
 前面权限都已经弄好后，当涉及到apk文件下载和安装的时候，你可以类似这样：
 ```
-        String url="http://xxx.xxx.cn:3366/down/baidu.apk";//为示例代码url
+    //是否增量更新的标志
+    private boolean mUpdate=false;
+
+    private void updateApk(){
+        String url=null;
+        
+        //此处mUpdate你要先根据业务逻辑赋值为true或false
+        if(mUpdate){
+            //增量更新的url
+            url="https://xxxx/xxx/test.patch";//示例代码
+        }else{
+            //全量更新的url
+            url="https://xxxx/xxx/test_2.0.0.apk";//示例代码
+        }
+        LogUtil.i("=========mUpdate======"+mUpdate);
+        LogUtil.i("=========url======"+url);
+
+        int firstIndex=url.lastIndexOf("/")+1;
+        int lastIndex=url.length();
+        String fileName=url.substring(firstIndex,lastIndex);
+        LogUtil.i("=========fileName======"+fileName);
         //启动下载
         ProgressDialog progressDialog = DownLoadHelper.getInstance().showDownLoading(mContext);
-        DownLoadHelper.getInstance().setFileName("abc.apk")//设置apk文件名
+        DownLoadHelper.getInstance().setFileName(fileName)//设置下载文件名
                 .setIcon(R.mipmap.ic_launcher)//设置apk图标资源id
                 .setAuthorityTag("com.p.atestdemo")//设置要与清单文件的 provider 中配置的authorities值一致
+                .setIncrementUpdate(mUpdate)//是否开启增量更新(true:开启,false:关闭,此行代码不设置会默认全量更新)
                 .downLoadFile(url, MainActivity.this, new DownLoadHelper.DownloadListener() {
                     @Override
                     public void onStart() {
@@ -85,13 +106,18 @@ authorities="${applicationId}"值为你项目的applicationId，一般在app—�
                     @Override
                     public void onError(String err) {
                         progressDialog.dismiss();
-
-                        LogUtil.i("=========下载失败=====");
-                        
-                        //下载失败的逻辑
-                        //......
-
+                        LogUtil.i("=========下载失败====="+err);
+                        if(DownLoadHelper.getInstance().isDeltaFileFailed(err)){
+                            LogUtil.i("=========增量更新下载失败====="+err);
+                            //增量更新下载失败的逻辑(一般发rx通知出来，然后改全量更新)
+                            //......
+                        }else{
+                            LogUtil.i("=========全量更新下载失败====="+err);
+                            //全量更新下载失败的逻辑(一般提示退出app)
+                            //......
+                        }
                     }
                 });
+    }
 ```
 这样，就可以下载新的apk文件进行安装了。不过在调用这个下载方法前，我们最好先判断下手机内存是否足够。
