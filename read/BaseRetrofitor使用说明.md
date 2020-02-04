@@ -55,17 +55,13 @@ BaseRetrofitor中，你需要定义整个app的baseurl，包括测试版和正�
 ```
 这里，你需要在自己的项目中新建一个AppConfig类，作为整个app的配置类，关于AppConfig后面会讲到。
 #### 六.通讯基本参数设置及调试log打印
-BaseRetrofitor有一个设置通讯基本参数及设置log打印的方法：
+BaseRetrofitor有一个设置通讯基本参数的方法：
 ```
     /**设置网络连接配置**/
     public <T extends BaseRetrofitor> T getBaseRetrofitor() {
-        //是否打印httpLog
-        boolean isPrintHttpLog=AppConfig.getInstance().isHttpLog();
-        //设置RetroHttp打印工具类
-        printHttpLog(isPrintHttpLog);
-
         return (T) BaseRetrofitor.this
-                .setCustomerLog(isPrintHttpLog);//设置是否关闭自定义log拦截器
+                //设置是否关闭自定义log拦截器,一般与网络log打印控制一致(默认为false,即关闭log打印和拦截器)
+                .setCustomerLog(RetroConfig.getInstance().isHttpLog());
         //                .setSystemLog(false)//设置是否使用系统拦截器打印log,默认false,不使用
         //                .setDefaultSSL(true)//设置通讯是否使用SSL加密,默认true,使用
         //                .setConnectTimeOut(30) //设置网络连接超时，默认30秒
@@ -75,12 +71,7 @@ BaseRetrofitor有一个设置通讯基本参数及设置log打印的方法：
     }
 ```
 此方法中可设置很多通讯参数，不过基本都是用的默认值，如有特殊需要，可自行设置。  
-这里主要讲的是方法中的
-```
-        //是否打印httpLog
-        boolean isPrintHttpLog = AppConfig.getInstance().isHttpLog();
-```
-涉及到一个类 AppConfig，与第五点一样，主要是涉及到整个app的配置类AppConfig，下面就来讲讲AppConfig
+下面就来讲讲AppConfig。
 #### 七.整个app的配置类 —— AppConfig
 作为一个项目，你需要在自己新建的项目最外层设置一个配置类AppConfig，作为对整个app的配置参数统一管理。  
 点击这里，可查看[AppConfig类模板代码](https://github.com/ShaoqiangPei/RetroHttp/blob/master/RetroHttp/httplibrary/src/main/java/com/httplibrary/httpApp/AppConfig.java)
