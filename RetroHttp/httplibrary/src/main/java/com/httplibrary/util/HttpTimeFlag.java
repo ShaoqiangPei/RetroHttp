@@ -84,7 +84,7 @@ public class HttpTimeFlag {
      * @return
      */
     private long stopFlag(String flag) {
-        if (StringUtil.isEmpty(flag)) {
+        if (StringUtil.isEmpty(flag)||null==map.get(flag)) {
             return -1;
         }
         long tempTime = map.get(flag);
