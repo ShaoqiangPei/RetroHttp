@@ -73,6 +73,33 @@ ApiObserver 继承自RxObserver，主要用于 通讯返回结果集的统一处
     @Override
     public void unifiedSuccess(Object obj) {
         LogUtil.i("=======ApiObserver返回成功统一处理========");
+        
+                //对返回成功结果做统一处理的逻辑
+        //若返回结果定义为 ErrorCode.INTERCEPT_RESULT,则表示结果经拦截不再传到界面去
+        //若返回结果为object(不定义为ErrorCode.INTERCEPT_RESULT)则表示返回数据经统一处理后，还会到界面做进一步处理
+        //......
+
+
+        ResponseData responseData= (ResponseData) obj;
+        int code=responseData.getCode();
+        //以统一拦截code==0的数据并使之不传到界面为例
+        if(code==0){
+            //关闭网络加载框
+            LoadingDialog.getInstance().hideLoading();
+
+            //统一处理(拦截结果不传到界面)的逻辑
+            //...
+
+            LogUtil.i("=====到底怎么回事啊啊啊啊===");
+
+            //此处做拦截统一处理，返回 ErrorCode.INTERCEPT_RESULT,表示结果不再传到界面去
+            return ErrorCode.INTERCEPT_RESULT;
+        }
+
+
+
+        LogUtil.i("=====返回数据成功(统一处理后):obj="+obj);
+        return obj;
 
     }
  ```
