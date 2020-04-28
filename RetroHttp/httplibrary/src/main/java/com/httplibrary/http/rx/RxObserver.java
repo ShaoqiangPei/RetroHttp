@@ -4,6 +4,7 @@ import com.httplibrary.http.error.ErrorCode;
 import com.httplibrary.http.error.HttpRepose;
 import com.httplibrary.http.error.ServerException;
 import com.httplibrary.util.HttpTimeFlag;
+import com.httplibrary.util.RetroLog;
 
 import java.util.Map;
 
@@ -51,7 +52,13 @@ public abstract class RxObserver<T> implements Observer {
             //通讯用时打印
             HttpTimeFlag.getInstance().stopFlagByString(getTimeTag());
             //通讯成功先经过unifiedSuccess统一处理，然后下发给doNext方法
-            doNext((T) unifiedSuccess(obj));
+            Object object=unifiedSuccess(obj);
+            if(object!=null&&ErrorCode.INTERCEPT_RESULT.equals(object.toString())){
+                RetroLog.w("======统一处理后做拦截处理,不走后续流程========");
+            }else{
+                RetroLog.w("======统一处理后不拦截,继续走后续流程========");
+                doNext((T) object);
+            }
         }
     }
 

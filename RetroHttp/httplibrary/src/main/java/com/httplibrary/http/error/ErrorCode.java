@@ -14,6 +14,12 @@ public class ErrorCode {
 
     private static Map<Integer, String> mErrorMap=new HashMap<>();
 
+    /***
+     * 当ApiObserver类中unifiedSuccess(Object obj)方法返回此字符串时,则数据不再往下传递
+     * 用于做整个通讯收到结果拦截的统一处理
+     */
+    public static final String INTERCEPT_RESULT="intercept_result_retro_http";
+
     /**通讯发生错误,会有自己的message,通讯进入onError()流程**/
     public static final int SERVER_FAILED_CODE=-1;//通讯发生错误,会有自己的message,通讯进入onError()流程
 
