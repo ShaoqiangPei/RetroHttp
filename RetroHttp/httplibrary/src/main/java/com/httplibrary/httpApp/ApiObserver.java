@@ -1,5 +1,6 @@
 //package com.httplibrary.httpApp;
 //
+//import com.httplibrary.http.error.ErrorCode;
 //import com.httplibrary.http.error.ServerException;
 //import com.httplibrary.http.rx.RxObserver;
 //import java.util.HashMap;
@@ -57,9 +58,26 @@
 //        String successResult=obj==null?"null":obj.toString();
 //        LogUtil.i("=====ApiObserver返回成功统一处理===原数据obj="+successResult);
 //
-//
 //        //对返回成功结果做统一处理的逻辑
+//        //若返回结果定义为 ErrorCode.INTERCEPT_RESULT,则表示结果经拦截不再传到界面去
+//        //若返回结果为object(不定义为ErrorCode.INTERCEPT_RESULT)则表示返回数据经统一处理后，还会到界面做进一步处理
 //        //......
+//
+//
+//        ResponseData responseData= (ResponseData) obj;
+//        int code=responseData.getCode();
+//        if(code==0){
+//            //关闭网络加载框
+//            LoadingDialog.getInstance().hideLoading();
+//
+//            //统一处理(拦截结果不传到界面)的逻辑
+//            //...
+//
+//            LogUtil.i("=====到底怎么回事啊啊啊啊===");
+//
+//            //此处做拦截统一处理，返回 ErrorCode.INTERCEPT_RESULT,表示结果不再传到界面去
+//            return ErrorCode.INTERCEPT_RESULT;
+//        }
 //
 //
 //
