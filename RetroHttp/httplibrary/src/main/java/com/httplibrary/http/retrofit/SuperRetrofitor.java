@@ -101,7 +101,7 @@ public abstract class SuperRetrofitor implements IRetrofitor {
     }
 
     /**设置url**/
-    private String getUrl() {
+    protected String getUrl() {
         if (isTest()) {
             return StringUtil.isNotEmpty(getTestUrl()) ? getTestUrl() : getBaseTestUrl();
         }
