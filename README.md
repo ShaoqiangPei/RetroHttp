@@ -87,5 +87,6 @@ Android9.0以后通讯不支持 http 方式，建议使用 https 方式通讯。
 来控制是否显示通讯log，过滤 log 的 tag=http,log等级为 w   
 具体可参考[BaseRetrofitor使用说明](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/BaseRetrofitor%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)中关于Log打印的介绍。
 
-
+### 七. 其他问题
+1. url不规范
 
