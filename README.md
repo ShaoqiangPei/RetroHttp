@@ -88,5 +88,6 @@ Android9.0以后通讯不支持 http 方式，建议使用 https 方式通讯。
 具体可参考[BaseRetrofitor使用说明](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/BaseRetrofitor%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)中关于Log打印的介绍。
 
 ### 七. 其他问题
-1. [Url不规范](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/url%E4%B8%8D%E8%A7%84%E8%8C%83%E8%AF%B4%E6%98%8E.md)
+1. [Url不规范](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/url%E4%B8%8D%E8%A7%84%E8%8C%83%E8%AF%B4%E6%98%8E.md)  
+2. [通讯返回结果为非`json`格式的解析](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/%E9%9D%9EJson%E6%95%B0%E6%8D%AE%E8%BF%94%E5%9B%9E%E6%A0%BC%E5%BC%8F%E5%A4%84%E7%90%86%E8%AF%B4%E6%98%8E.md)
 
