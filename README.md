@@ -90,5 +90,6 @@ Android9.0以后通讯不支持 http 方式，建议使用 https 方式通讯。
 ### 七. 其他问题
 1. [Url不规范](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/url%E4%B8%8D%E8%A7%84%E8%8C%83%E8%AF%B4%E6%98%8E.md)  
 2. [通讯返回结果为非`json`格式的解析](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/%E9%9D%9EJson%E6%95%B0%E6%8D%AE%E8%BF%94%E5%9B%9E%E6%A0%BC%E5%BC%8F%E5%A4%84%E7%90%86%E8%AF%B4%E6%98%8E.md)  
-3. [Kotlin版网络通讯如何写?](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/Kotlin%E7%89%88%E9%80%9A%E8%AE%AF%E5%86%99%E6%B3%95%E8%AF%B4%E6%98%8E.md)
+3. [Kotlin版网络通讯如何写?](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/Kotlin%E7%89%88%E9%80%9A%E8%AE%AF%E5%86%99%E6%B3%95%E8%AF%B4%E6%98%8E.md)  
+4. [如何发起串联请求?](https://github.com/ShaoqiangPei/RetroHttp/blob/master/read/%E4%B8%B2%E8%81%94%E8%AF%B7%E6%B1%82%E8%AF%B4%E6%98%8E.md)
 
