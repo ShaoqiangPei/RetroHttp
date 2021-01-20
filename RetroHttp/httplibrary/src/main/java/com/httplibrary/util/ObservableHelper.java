@@ -1,5 +1,7 @@
 package com.httplibrary.util;
 
+import com.httplibrary.interfacer.OnObservableListener;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -105,6 +107,23 @@ public class ObservableHelper {
             RetroLog.i("======function为null=====");
         }
         return observable;
+    }
+
+    /***
+     * 同时发起多个通讯的Observable(并发通讯)
+     *
+     * @param length
+     * @param listener
+     * @return
+     */
+    public static Observable getObservableByArray(int length, OnObservableListener listener){
+        Observable observableArray[] = new Observable[length];
+        for (int i = 0; i < length; i++) {
+            observableArray[i] = listener.getObservable(i);
+        }
+        return Observable.mergeArray(observableArray)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 }
