@@ -34,6 +34,7 @@ public class ErrorCode {
         mErrorMap.put(NO_NET_WORK,"网络未连接,请开启网络后使用!");
         mErrorMap.put(NETWORK_EXCEPTION_CODE,"通讯数据解析异常");
         mErrorMap.put(HTTP_HPPS_CODE,"通讯为http请求头不兼容,请更换为https请求头");
+        mErrorMap.put(CONNECT_TIME_OUT_CODE,"通讯连接超时");
         return mErrorMap;
     }
 
