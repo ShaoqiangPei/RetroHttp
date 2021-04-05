@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -52,7 +53,7 @@ public abstract class SuperRetrofitor implements IRetrofitor {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
     }
 
-    private OkHttpClient.Builder getOkHttpClientBuilder() {
+    protected OkHttpClient.Builder getOkHttpClientBuilder() {
         Cache cache = new Cache(new File(HttpConfig.PATH_CACHE), HttpConfig.DEFAULT_CACHE_SIZE);
 
         mConnectTimeOut=mConnectTimeOut>0?mConnectTimeOut:HttpConfig.DEFAULT_CONNECT_TIMEOUT;
@@ -118,15 +119,6 @@ public abstract class SuperRetrofitor implements IRetrofitor {
         return mCustomerLog;
     }
 
-//    /**
-//     * 是否打开自定义Log调试(仅供SuperRetrofitor子类使用)
-//     *
-//     * @param print true:打开调试log,  false:关闭调试log
-//     */
-//    protected void printHttpLog(boolean print){
-//        RetroLog.setDebug(print);
-//    }
-
     /**获取通讯是否使用默认ssl加密的标志**/
     private boolean isDefaultSSL() {
         return mDefaultSSL;
@@ -180,7 +172,6 @@ public abstract class SuperRetrofitor implements IRetrofitor {
             @Override
             public Request diposeRequest(Request request) {
                 Request.Builder builder = request.newBuilder();
-
                 Map<String,String>map=getHeaderMap();
                 if(map!=null&& !map.isEmpty()){
                     //遍历map

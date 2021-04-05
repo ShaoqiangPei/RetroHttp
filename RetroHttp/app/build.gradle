@@ -41,4 +41,8 @@ dependencies {
     androidTestImplementation librarys.androidTestImplementation_espresso
     implementation project(path: ':httplibrary')
 
+    //PermissionsDispatcher权限
+    implementation "org.permissionsdispatcher:permissionsdispatcher:4.6.0"
+    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.6.0"
+
 }

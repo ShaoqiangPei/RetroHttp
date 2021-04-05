@@ -34,6 +34,7 @@ public class AppSigningInterceptor implements Interceptor {
         Request.Builder newRequest = oldRequest.newBuilder()
                 .method(oldRequest.method(), oldRequest.body())
                 // 设置请求头
+                .addHeader("Accept-Encoding", "identity")//强迫服务器不走压缩，以得到文件总大小
                 .addHeader("AppKey", appSecret)
                 .addHeader("Nonce", nonce)
                 .addHeader("Signature", sign)

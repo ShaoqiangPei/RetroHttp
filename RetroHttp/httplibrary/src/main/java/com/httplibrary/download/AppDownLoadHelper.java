@@ -30,7 +30,6 @@ public class AppDownLoadHelper {
     public static final int READ_DOWN_TIMEOUT = 20;
 
     public String mBaseUrl;
-
     public String mApkName;
 
     public Set<AppProgressListener> mDownloadListeners;

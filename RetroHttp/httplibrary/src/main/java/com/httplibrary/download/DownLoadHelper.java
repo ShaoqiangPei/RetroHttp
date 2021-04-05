@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import androidx.core.app.NotificationCompat;
@@ -38,12 +37,16 @@ public class DownLoadHelper {
 
     //目标文件存储的文件名,如:"check.apk,delta.patch"
     private String mFileName;
+    //目标文件大小
+    private long mFileLength;
     //AUTHORITY_TAG 即是在清单文件中配置的authorities
     private String mAuthorityTag;
     //appIcon,即app图标id，如：R.mipmap.ic_launcher
     private int mAppIconId;
     //是否开启增量更新
-    private boolean mIncrementUpdate=false;//默认false，不开启
+    private boolean mIncrementUpdate=false;//默认false,不开启
+    //是否使用默认加载对话框,默认false
+    private boolean mUseDefaultDownDialog=false;//默认false,不开启
 
     private int NOTIFY_ID = 1000;
     private NotificationCompat.Builder mBuilder;
@@ -57,7 +60,16 @@ public class DownLoadHelper {
     }
 
     public static DownLoadHelper getInstance() {
-        return DownLoadHelper.Holder.instance;
+        return Holder.instance;
+    }
+
+    /**从url中截取出默认文件名**/
+    public String getDefaultFileName(String url){
+        if(StringUtil.isNotEmpty(url)&&url.contains("/")){
+            int lastIndex=url.lastIndexOf("/");
+            return url.substring(lastIndex+1);
+        }
+        return null;
     }
 
     /**
@@ -81,6 +93,19 @@ public class DownLoadHelper {
     }
 
     /***
+     * 设置目标下载文件总大小
+     *
+     * @param fileLength
+     * @return
+     */
+    public DownLoadHelper setFileLength(long fileLength){
+        if(fileLength>0) {
+            this.mFileLength = fileLength;
+        }
+        return DownLoadHelper.this;
+    }
+
+    /***
      * 设置文件下载的 mAuthorityTag,即是在清单文件的 provider 中配置的authorities
      * @param authorityTag
      * @return
@@ -96,6 +121,15 @@ public class DownLoadHelper {
      */
     public DownLoadHelper setIncrementUpdate(boolean incrementUpdate){
         this.mIncrementUpdate=incrementUpdate;
+        return DownLoadHelper.this;
+    }
+
+    /***
+     * 是否开启下载时默认加载dialog,默认为false，即不开启。
+     * @return
+     */
+    public DownLoadHelper setUseDefaultDownDialog(boolean useDefaultDownDialog){
+        this.mUseDefaultDownDialog=useDefaultDownDialog;
         return DownLoadHelper.this;
     }
 
@@ -149,17 +183,34 @@ public class DownLoadHelper {
                 .setTag("xx")
                 .setUrl(url)
                 .setDownLoadListener(new AppProgressListener() {
+
+                    //默认下载的dialog对象
+                    private ProgressDialog progressDialog;
+
                     @Override
                     public void onStart() {
                         RetroLog.w("========开始下载=====");
+                        if(mUseDefaultDownDialog) {
+                            progressDialog = showDownLoading(mContext);
+                        }
                         downloadListener.onStart();
                     }
 
                     @Override
                     public void update(long bytesRead, long contentLength, boolean done) {
+                        if(mFileLength>0){
+                            contentLength=mFileLength;
+                            RetroLog.w("=======已设置目标文件总大小,使用设置值测算文件下载进度========");
+                        }else{
+                            RetroLog.w("=======未设置目标文件总大小,使用contentLength测算文件下载进度========");
+                        }
+
                         int read = (int) (bytesRead * 100f / contentLength);
                         RetroLog.w("=======下载文件总:"+contentLength+"    当前size:"+bytesRead);
                         //更新进度条
+                        if(mUseDefaultDownDialog&&progressDialog!=null){
+                            progressDialog.setProgress((int)(read * 1f));
+                        }
                         downloadListener.update(read,done);
                         //更新通知
                         updateNotification(read);
@@ -168,6 +219,11 @@ public class DownLoadHelper {
                     @Override
                     public void onCompleted() {
                         RetroLog.w("========下载完成=====");
+                        //隐藏progressDialog
+                        if(mUseDefaultDownDialog&&progressDialog!=null){
+                            progressDialog.dismiss();
+                            progressDialog=null;
+                        }
 
                         if(mIncrementUpdate){
                             RetroLog.w("========增量更新下载完成==============");
@@ -205,6 +261,11 @@ public class DownLoadHelper {
 
                     @Override
                     public void onError(String err) {
+                        //隐藏progressDialog
+                        if(mUseDefaultDownDialog&&progressDialog!=null){
+                            progressDialog.dismiss();
+                            progressDialog=null;
+                        }
                         downloadListener.onError(err);
                         cancelNotification();
                         RetroLog.e("=========下载失败:" + err);
@@ -229,6 +290,7 @@ public class DownLoadHelper {
         RetroLog.w("===下载文件名====mFileName="+mFileName);
         RetroLog.w("===下载authorityTag====mAuthorityTag="+mAuthorityTag);
         RetroLog.w("===下载是否开启增量更新(false=不开启,true=开启)====mIncrementUpdate="+mIncrementUpdate);
+        RetroLog.w("===下载是否开启默认下载进度dialog(false=不开启,true=开启)====mUseDefaultDownDialog="+mUseDefaultDownDialog);
     }
 
     /**增量更新合成文件的方法**/

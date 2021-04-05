@@ -3,6 +3,7 @@ package com.httplibrary.download;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import com.httplibrary.util.RetroLog;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AppDownLoadManager {
@@ -42,6 +43,9 @@ public class AppDownLoadManager {
 
             @Override
             public void update(long bytesRead, long contentLength, boolean done) {
+                RetroLog.i("==========bytesRead="+bytesRead+"  contentLength="+contentLength+"  done="+done );
+
+
                 Message message = mUIHandler.obtainMessage();
                 Bundle bundle = new Bundle();
                 bundle.putLong("bytesRead", bytesRead);
@@ -151,6 +155,6 @@ public class AppDownLoadManager {
                 mTagToHelpers.remove(key);
             }
         }
-
     }
+
 }
