@@ -77,16 +77,15 @@ authorities="${applicationId}"值为你项目的applicationId，一般在app—�
         LogUtil.i("=========mUpdate======"+mUpdate);
         LogUtil.i("=========url======"+url);
 
-        int firstIndex=url.lastIndexOf("/")+1;
-        int lastIndex=url.length();
-        String fileName=url.substring(firstIndex,lastIndex);
+        String fileName=DownLoadHelper.getInstance().getDefaultFileName(url);
         LogUtil.i("=========fileName======"+fileName);
         //启动下载
-        ProgressDialog progressDialog = DownLoadHelper.getInstance().showDownLoading(mContext);
         DownLoadHelper.getInstance().setFileName(fileName)//设置下载文件名
+                .setFileLength(88490)//设置下载文件大小,不设置时，将采用系统获取的文件大小,默认采用系统获取的文件大小
                 .setIcon(R.mipmap.ic_launcher)//设置apk图标资源id
                 .setAuthorityTag("com.p.atestdemo")//设置要与清单文件的 provider 中配置的authorities值一致
                 .setIncrementUpdate(mUpdate)//是否开启增量更新(true:开启,false:关闭,此行代码不设置会默认全量更新)
+                .setUseDefaultDownDialog(true)//开启默认下载进度dialog,默认为false，即不使用默认进度加载的dialog
                 .downLoadFile(url, MainActivity.this, new DownLoadHelper.DownloadListener() {
                     @Override
                     public void onStart() {
@@ -95,17 +94,16 @@ authorities="${applicationId}"值为你项目的applicationId，一般在app—�
 
                     @Override
                     public void update(int progress, boolean done) {
-                        progressDialog.setProgress((int) (progress * 1f));
+                        
                     }
 
                     @Override
                     public void onCompleted() {
-                        progressDialog.dismiss();
+                       
                     }
 
                     @Override
                     public void onError(String err) {
-                        progressDialog.dismiss();
                         LogUtil.i("=========下载失败====="+err);
                         if(DownLoadHelper.getInstance().isDeltaFileFailed(err)){
                             LogUtil.i("=========增量更新下载失败====="+err);
@@ -115,6 +113,63 @@ authorities="${applicationId}"值为你项目的applicationId，一般在app—�
                             LogUtil.i("=========全量更新下载失败====="+err);
                             //全量更新下载失败的逻辑(一般提示退出app)
                             //......
+                        }
+                    }
+                });
+    }
+```
+这里需要注意的是:
+- setFileLength(10000)：是设置下载文件总大小，当不设置此属性的时候，系统会默认采用ContenLength来计算文件总大小
+- setIncrementUpdate(false)：表示是否采用增量更新的方式下载，默认是不采用
+- setUseDefaultDownDialog(true)：表示是否使用默认的下载进度框，true 表示使用，false 表示不使用，默认情况下为false，即不使用
+
+当我们需要自定义下载进度加载的`dialog`时,我们需要设置`setUseDefaultDownDialog(false)`,然后添加自己定义的进度条，类似如下:
+```
+  /**更新apk**/
+    private void updateApk(String url){
+        String fileName= DownLoadHelper.getInstance().getDefaultFileName(url);
+        RetroLog.i("=========fileName===kk==="+fileName);
+        //自定义加载进度框
+        MyProgressDialog dialog= new MyProgressDialog();
+        dialog.show();
+        //启动下载
+        DownLoadHelper.getInstance().setFileName(fileName)//设置下载文件名
+                //其他代码省略
+                //......
+                .setUseDefaultDownDialog(false)//禁用默认下载进度dialog
+                .downLoadFile(url, MainActivity.this, new DownLoadHelper.DownloadListener(){
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void update(int progress, boolean done) {
+                         //更新进度条
+                         dialog.setProgress(progress)；
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                         //进度条隐藏
+                         dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onError(String err) {
+                         //进度条隐藏
+                         dialog.dismiss();
+
+                        RetroLog.i("=========下载失败=====" + err);
+                        if (DownLoadHelper.getInstance().isDeltaFileFailed(err)) {
+                            RetroLog.i("=========增量更新下载失败=====" + err);
+                            //增量更新下载失败的逻辑(一般发rx通知出来，然后改全量更新)
+                            //......
+                            //由于使用非增量更新，故此处不做处理
+                        } else {
+                            RetroLog.i("=========全量更新下载失败=====" + err);
+                            //全量更新下载失败的逻辑(一般提示退出app)
+
                         }
                     }
                 });
